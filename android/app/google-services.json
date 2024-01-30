@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "361830031584",
+    "project_id": "strive-6fa84",
+    "storage_bucket": "strive-6fa84.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:361830031584:android:92136940e8fd9ee258f085",
+        "android_client_info": {
+          "package_name": "com.example.strive"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAKlJW6OIQFEEH8SkAn8FUIlUAuokpp1OA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
