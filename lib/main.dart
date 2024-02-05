@@ -1,11 +1,9 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/firebase_options.dart';
 import 'package:strive/providers/firebase_auth.dart';
-import 'package:strive/providers/user.dart';
 
 import 'package:strive/screens/auth.dart';
 import 'package:strive/screens/loading.dart';
