@@ -1,10 +1,15 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/firebase_options.dart';
+import 'package:strive/providers/firebase_auth.dart';
+import 'package:strive/providers/user.dart';
 
 import 'package:strive/screens/auth.dart';
+import 'package:strive/screens/loading.dart';
+import 'package:strive/screens/tabs.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 29, 84, 193),
@@ -18,11 +23,12 @@ void main() async {
   runApp(const ProviderScope(child: MainApp()));
 }
 
-class MainApp extends StatelessWidget {
+class MainApp extends ConsumerWidget {
   const MainApp({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final firebaseAuth = ref.watch(firebaseAuthProvider);
     return MaterialApp(
       theme: ThemeData().copyWith(
         colorScheme: kColorScheme,
@@ -38,7 +44,23 @@ class MainApp extends StatelessWidget {
                   ),
             ),
       ),
-      home: const AuthScreen(),
+      home: firebaseAuth.when(
+        data: (user) {
+          print('data');
+          if (user == null) {
+            return const AuthScreen();
+          }
+          return const TabsScreen();
+        },
+        error: (e, s) {
+          print('error');
+          return const AuthScreen();
+        },
+        loading: () {
+          print('loading');
+          return const LoadingScreen();
+        },
+      ),
     );
   }
 }
