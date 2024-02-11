@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:strive/screens/category.dart';
+import 'package:strive/screens/category_screen.dart';
 
 class TabsScreen extends ConsumerWidget {
   const TabsScreen({super.key});
