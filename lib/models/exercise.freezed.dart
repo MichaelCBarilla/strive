@@ -147,6 +147,7 @@ abstract class _Range implements Range {
 
 /// @nodoc
 mixin _$Exercise {
+  String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   Range get advisedRepRange => throw _privateConstructorUsedError;
   Range get advisedSetRange => throw _privateConstructorUsedError;
@@ -161,7 +162,8 @@ abstract class $ExerciseCopyWith<$Res> {
   factory $ExerciseCopyWith(Exercise value, $Res Function(Exercise) then) =
       _$ExerciseCopyWithImpl<$Res, Exercise>;
   @useResult
-  $Res call({String title, Range advisedRepRange, Range advisedSetRange});
+  $Res call(
+      {String id, String title, Range advisedRepRange, Range advisedSetRange});
 
   $RangeCopyWith<$Res> get advisedRepRange;
   $RangeCopyWith<$Res> get advisedSetRange;
@@ -180,11 +182,16 @@ class _$ExerciseCopyWithImpl<$Res, $Val extends Exercise>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? advisedRepRange = null,
     Object? advisedSetRange = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -225,7 +232,8 @@ abstract class _$$ExerciseImplCopyWith<$Res>
       __$$ExerciseImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String title, Range advisedRepRange, Range advisedSetRange});
+  $Res call(
+      {String id, String title, Range advisedRepRange, Range advisedSetRange});
 
   @override
   $RangeCopyWith<$Res> get advisedRepRange;
@@ -244,11 +252,16 @@ class __$$ExerciseImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? title = null,
     Object? advisedRepRange = null,
     Object? advisedSetRange = null,
   }) {
     return _then(_$ExerciseImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       title: null == title
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -269,10 +282,13 @@ class __$$ExerciseImplCopyWithImpl<$Res>
 
 class _$ExerciseImpl implements _Exercise {
   const _$ExerciseImpl(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.advisedRepRange,
       required this.advisedSetRange});
 
+  @override
+  final String id;
   @override
   final String title;
   @override
@@ -282,7 +298,7 @@ class _$ExerciseImpl implements _Exercise {
 
   @override
   String toString() {
-    return 'Exercise(title: $title, advisedRepRange: $advisedRepRange, advisedSetRange: $advisedSetRange)';
+    return 'Exercise(id: $id, title: $title, advisedRepRange: $advisedRepRange, advisedSetRange: $advisedSetRange)';
   }
 
   @override
@@ -290,6 +306,7 @@ class _$ExerciseImpl implements _Exercise {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ExerciseImpl &&
+            (identical(other.id, id) || other.id == id) &&
             (identical(other.title, title) || other.title == title) &&
             (identical(other.advisedRepRange, advisedRepRange) ||
                 other.advisedRepRange == advisedRepRange) &&
@@ -299,7 +316,7 @@ class _$ExerciseImpl implements _Exercise {
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, title, advisedRepRange, advisedSetRange);
+      Object.hash(runtimeType, id, title, advisedRepRange, advisedSetRange);
 
   @JsonKey(ignore: true)
   @override
@@ -310,10 +327,13 @@ class _$ExerciseImpl implements _Exercise {
 
 abstract class _Exercise implements Exercise {
   const factory _Exercise(
-      {required final String title,
+      {required final String id,
+      required final String title,
       required final Range advisedRepRange,
       required final Range advisedSetRange}) = _$ExerciseImpl;
 
+  @override
+  String get id;
   @override
   String get title;
   @override

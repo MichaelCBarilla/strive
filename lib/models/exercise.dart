@@ -13,6 +13,7 @@ class Range with _$Range {
 @freezed
 class Exercise with _$Exercise {
   const factory Exercise({
+    required String id,
     required String title,
     required Range advisedRepRange,
     required Range advisedSetRange,

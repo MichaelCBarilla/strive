@@ -8,10 +8,13 @@ class NewCategory extends StatefulWidget {
 }
 
 class _NewCategoryState extends State<NewCategory> {
-  final _titleController = TextEditingController();
+  final _form = GlobalKey<FormState>();
+  String _enteredTitle = '';
 
   void _submitCategory() {
-    if (_titleController.text.trim().isEmpty) {
+    final isValid = _form.currentState!.validate();
+
+    if (!isValid) {
       return;
     }
 
@@ -21,67 +24,50 @@ class _NewCategoryState extends State<NewCategory> {
   }
 
   @override
-  void dispose() {
-    _titleController.dispose();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
-    return SizedBox(
-      height: double.infinity,
-      child: SingleChildScrollView(
-        child: Padding(
-          padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
-          child: SizedBox(
-            height: 200,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                TextField(
-                  controller: _titleController,
-                  maxLength: 50,
-                  decoration: const InputDecoration(
-                    label: Text('Title'),
-                  ),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
+      child: SizedBox(
+        height: double.infinity,
+        child: Form(
+          key: _form,
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextFormField(
+                decoration: const InputDecoration(
+                  label: Text('Title'),
                 ),
-              ],
-            ),
+                onSaved: (value) {
+                  _enteredTitle = value!;
+                },
+                validator: (value) {
+                  if (value == null || value.trim().isEmpty) {
+                    return 'Please enter a valid category title.';
+                  }
+                },
+              ),
+              const Spacer(),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  TextButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Cancel'),
+                  ),
+                  ElevatedButton(
+                    onPressed: _submitCategory,
+                    child: const Text('Create Category'),
+                  ),
+                ],
+              )
+            ],
           ),
         ),
       ),
     );
-    // return SizedBox(
-    //   height: 500,
-    //   child: SingleChildScrollView(
-    //     child: Padding(
-    //       padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
-    //       child: Column(
-    //         mainAxisSize: MainAxisSize.min,
-    //         children: [
-    //           TextField(
-    //             controller: _titleController,
-    //             maxLength: 50,
-    //             decoration: const InputDecoration(
-    //               label: Text('Title'),
-    //             ),
-    //           ),
-    //           const Spacer(),
-    //           TextButton(
-    //             onPressed: () {
-    //               Navigator.pop(context);
-    //             },
-    //             child: const Text('Cancel'),
-    //           ),
-    //           ElevatedButton(
-    //             onPressed: _submitCategory,
-    //             child: const Text('Create Category'),
-    //           ),
-    //         ],
-    //       ),
-    //     ),
-    //   ),
-    // );
   }
 }
