@@ -46,12 +46,26 @@ class _UserImagePicker extends State<UserImagePicker> {
           foregroundImage:
               _pickedImageFile != null ? FileImage(_pickedImageFile!) : null,
         ),
-        TextButton.icon(
+        TextButton(
           onPressed: _pickImage,
-          icon: const Icon(Icons.image),
-          label: Text(
-            'Add Image',
-            style: TextStyle(color: Theme.of(context).colorScheme.primary),
+          child: const Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Icon(Icons.image),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                'Add Image',
+              ),
+              SizedBox(
+                width: 10,
+              ),
+              Text(
+                '(optional)',
+                style: TextStyle(fontSize: 10.0),
+              )
+            ],
           ),
         ),
       ],

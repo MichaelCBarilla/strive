@@ -6,6 +6,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:intl/intl.dart';
 
 import 'package:strive/widgets/user_image_picker.dart';
 
@@ -26,8 +27,26 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   var _enteredEmail = '';
   var _enteredUsername = '';
   var _enteredPassword = '';
+  String? _enteredWeight = '';
+  var _enteredWeightType = 'pounds';
   File? _selectedImage;
+  DateTime? _selectedDate;
   var _isAuthenticating = false;
+  final _focusNode = FocusNode();
+  final _birthdate = TextEditingController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _focusNode.addListener(() {
+      if (_focusNode.hasFocus) {
+        print('start date picker');
+        _presentDatePicker();
+        _focusNode.unfocus();
+      }
+    });
+  }
 
   void _submit() async {
     final isValid = _formKey.currentState!.validate();
@@ -43,7 +62,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         _isAuthenticating = true;
       });
       if (_isLogin) {
-        final userCredentials = await _firebase.signInWithEmailAndPassword(
+        await _firebase.signInWithEmailAndPassword(
           email: _enteredEmail,
           password: _enteredPassword,
         );
@@ -52,22 +71,8 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           email: _enteredEmail,
           password: _enteredPassword,
         );
-        final storageRef = FirebaseStorage.instance
-            .ref()
-            .child('user_images')
-            .child('${userCredentials.user!.uid}.jpg');
 
-        await storageRef.putFile(_selectedImage!);
-        final imageUrl = await storageRef.getDownloadURL();
-
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(userCredentials.user!.uid)
-            .set({
-          'username': _enteredUsername,
-          'email': _enteredEmail,
-          'image_url': imageUrl
-        });
+        await _createInitialUser(userCredentials);
       }
     } on FirebaseAuthException catch (error) {
       if (context.mounted) {
@@ -82,6 +87,78 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
         _isAuthenticating = false;
       });
     }
+  }
+
+  Future<void> _createInitialUser(UserCredential userCredentials) async {
+    final user = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userCredentials.user!.uid);
+
+    /* Set username and email. */
+    await user.set({
+      'username': _enteredUsername,
+      'email': _enteredEmail,
+    });
+
+    /* Store and set user image, if set. */
+    String? imageUrl;
+    if (_selectedImage != null) {
+      final storageRef = FirebaseStorage.instance
+          .ref()
+          .child('userImages')
+          .child('${userCredentials.user!.uid}.jpg');
+      await storageRef.putFile(_selectedImage!);
+      imageUrl = await storageRef.getDownloadURL();
+      await user.update({
+        'imageUrl': imageUrl,
+      });
+    }
+
+    /* Set birthdate, if set. */
+    await user.update({
+      'birthdate': _selectedDate,
+    });
+
+    /* Set first weight, if set. */
+    if (_enteredWeight?.trim() != '') {
+      await user.update({
+        'weights': [
+          {
+            'value': _enteredWeight,
+            'weightType': _enteredWeightType,
+            'dateEntered': DateTime.now(),
+          }
+        ],
+      });
+    } else {
+      await user.update({
+        'weights': [],
+      });
+    }
+  }
+
+  void _presentDatePicker() async {
+    final now = DateTime.now();
+    final firstDate = DateTime(now.year - 120, now.month, now.day);
+    final pickedDate = await showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: firstDate,
+      lastDate: now,
+    );
+    if (pickedDate != null) {
+      setState(() {
+        _selectedDate = pickedDate;
+      });
+      _birthdate.text = DateFormat.yMd().format(_selectedDate!);
+    }
+  }
+
+  @override
+  void dispose() {
+    _birthdate.dispose();
+    _focusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -114,7 +191,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                     child: Form(
                       key: _formKey,
                       child: Column(
-                        mainAxisSize: MainAxisSize.min,
+                        // mainAxisSize: MainAxisSize.min,
                         children: [
                           if (!_isLogin)
                             UserImagePicker(
@@ -174,6 +251,108 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
                               _enteredPassword = newValue!;
                             }),
                           ),
+                          if (!_isLogin)
+                            TextField(
+                              focusNode: _focusNode,
+                              readOnly: true,
+                              controller: _birthdate,
+                              decoration: const InputDecoration(
+                                label: Row(
+                                  children: [
+                                    Text('Birthdate'),
+                                    SizedBox(
+                                      width: 10.0,
+                                    ),
+                                    Text(
+                                      '(optional)',
+                                      style: TextStyle(fontSize: 10.0),
+                                    )
+                                  ],
+                                ),
+                              ),
+                            ),
+                          if (!_isLogin)
+                            Row(
+                              mainAxisSize: MainAxisSize.max,
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                                Expanded(
+                                  flex: 3,
+                                  child: TextFormField(
+                                    keyboardType: TextInputType.number,
+                                    decoration: const InputDecoration(
+                                      label: Row(
+                                        children: [
+                                          Text('Weight'),
+                                          SizedBox(
+                                            width: 10.0,
+                                          ),
+                                          Text(
+                                            '(optional)',
+                                            style: TextStyle(fontSize: 10.0),
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      if ((value != null &&
+                                              value!.trim().isNotEmpty) &&
+                                          (int.tryParse(value) == null ||
+                                              int.tryParse(value)! < 0)) {
+                                        return 'Please enter a valid weight, or none at all.';
+                                      }
+                                      return null;
+                                    },
+                                    onSaved: (value) {
+                                      _enteredWeight = value!;
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(
+                                  width: 10.0,
+                                ),
+                                Expanded(
+                                  flex: 1,
+                                  child: DropdownButtonFormField(
+                                    value: _enteredWeightType,
+                                    items: const [
+                                      DropdownMenuItem(
+                                        value: 'pounds',
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 0, horizontal: 10),
+                                          child: Text(
+                                            'lb',
+                                          ),
+                                        ),
+                                      ),
+                                      DropdownMenuItem(
+                                        value: 'kilograms',
+                                        child: Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              vertical: 0, horizontal: 10),
+                                          child: Text(
+                                            'kg',
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                    onSaved: (value) {
+                                      _enteredWeightType = value!;
+                                    },
+                                    validator: (value) {
+                                      if (value == null) {
+                                        return 'Unselected event.';
+                                      }
+                                      return null;
+                                    },
+                                    onChanged: (value) {
+                                      print('$value changed');
+                                    },
+                                  ),
+                                ),
+                              ],
+                            ),
                           const SizedBox(
                             height: 12,
                           ),
