@@ -90,6 +90,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
   }
 
   Future<void> _createInitialUser(UserCredential userCredentials) async {
+    final now = DateTime.now();
     final user = FirebaseFirestore.instance
         .collection('users')
         .doc(userCredentials.user!.uid);
@@ -98,6 +99,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
     await user.set({
       'username': _enteredUsername,
       'email': _enteredEmail,
+      'creationDate': now,
     });
 
     /* Store and set user image, if set. */
@@ -126,7 +128,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
           {
             'value': _enteredWeight,
             'weightType': _enteredWeightType,
-            'dateEntered': DateTime.now(),
+            'dateEntered': now,
           }
         ],
       });
