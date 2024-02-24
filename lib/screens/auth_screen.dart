@@ -100,6 +100,11 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       'username': _enteredUsername,
       'email': _enteredEmail,
       'creationDate': now,
+      'savedPrograms': [],
+      'savedWorkouts': [],
+      'savedExercises': [],
+      'completedWorkouts': [],
+      'completedExercises': [],
     });
 
     /* Store and set user image, if set. */
