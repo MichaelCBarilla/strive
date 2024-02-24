@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/firebase_options.dart';
-import 'package:strive/providers/exercises.dart';
 
 import 'package:strive/screens/auth_screen.dart';
 import 'package:strive/screens/loading_screen.dart';
