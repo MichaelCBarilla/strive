@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class WorkoutCategory extends StatelessWidget {
-  const WorkoutCategory({super.key});
+class ProgramDisplay extends StatelessWidget {
+  const ProgramDisplay({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class WorkoutCategory extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 const Text(
-                  'Category Title',
+                  'Program Title',
                   style: TextStyle(fontSize: 20),
                 ),
                 IconButton(
@@ -38,14 +38,14 @@ class WorkoutCategory extends StatelessWidget {
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                 ),
                 Container(
-                  height: 150,
-                  width: 200,
+                  height: 200,
+                  width: 300,
                   color: Colors.amber,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                 ),
                 Container(
-                  height: 150,
-                  width: 200,
+                  height: 200,
+                  width: 300,
                   color: Colors.amber,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                 ),
