@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class NewCategory extends StatefulWidget {
-  const NewCategory({super.key});
+class NewProgram extends StatefulWidget {
+  const NewProgram({super.key});
 
   @override
-  State<NewCategory> createState() => _NewCategoryState();
+  State<NewProgram> createState() => _NewProgramState();
 }
 
-class _NewCategoryState extends State<NewCategory> {
+class _NewProgramState extends State<NewProgram> {
   final _form = GlobalKey<FormState>();
   String _enteredTitle = '';
 
@@ -60,7 +60,7 @@ class _NewCategoryState extends State<NewCategory> {
                   ),
                   ElevatedButton(
                     onPressed: _submitCategory,
-                    child: const Text('Create Category'),
+                    child: const Text('Create Program'),
                   ),
                 ],
               )

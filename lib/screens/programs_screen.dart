@@ -1,7 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import 'package:strive/widgets/workout_category/new_category.dart';
+import 'package:strive/widgets/workout_category/new_program.dart';
 import 'package:strive/widgets/workout_category/program_display.dart';
 
 class ProgramsScreen extends StatefulWidget {
@@ -15,7 +15,7 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
   void _openAddCategoryOverlay() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => const NewCategory(),
+      builder: (ctx) => const NewProgram(),
       isScrollControlled: true,
       constraints: const BoxConstraints(maxWidth: double.infinity),
       useSafeArea: true,
