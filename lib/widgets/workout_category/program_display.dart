@@ -21,7 +21,7 @@ class ProgramDisplay extends StatelessWidget {
                 ),
                 IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.edit),
+                  icon: const Icon(Icons.settings),
                 ),
               ],
             ),
@@ -32,20 +32,20 @@ class ProgramDisplay extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               children: [
                 Container(
-                  height: 200,
-                  width: 300,
+                  height: 175,
+                  width: 250,
                   color: Colors.amber,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                 ),
                 Container(
-                  height: 200,
-                  width: 300,
+                  height: 175,
+                  width: 250,
                   color: Colors.amber,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                 ),
                 Container(
-                  height: 200,
-                  width: 300,
+                  height: 175,
+                  width: 250,
                   color: Colors.amber,
                   margin: const EdgeInsets.symmetric(horizontal: 20),
                 ),

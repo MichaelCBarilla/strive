@@ -12,47 +12,17 @@ class ProgramsScreen extends StatefulWidget {
 }
 
 class _ProgramsScreenState extends State<ProgramsScreen> {
-  void _openAddCategoryOverlay() {
-    showModalBottomSheet(
-      context: context,
-      builder: (ctx) => const NewProgram(),
-      isScrollControlled: true,
-      constraints: const BoxConstraints(maxWidth: double.infinity),
-      useSafeArea: true,
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: Row(
-              mainAxisSize: MainAxisSize.max,
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: _openAddCategoryOverlay,
-                    child: const Text('Add Program'),
-                  ),
-                ),
-                const SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: ElevatedButton(
-                    onPressed: () {},
-                    child: const Text('Add Workout'),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const ProgramDisplay(),
-        ],
+    return const Center(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            ProgramDisplay(),
+            ProgramDisplay(),
+            ProgramDisplay(),
+          ],
+        ),
       ),
     );
   }

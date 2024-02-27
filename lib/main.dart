@@ -6,7 +6,6 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/firebase_options.dart';
 
 import 'package:strive/screens/auth_screen.dart';
-import 'package:strive/screens/programs_screen.dart';
 import 'package:strive/screens/loading_screen.dart';
 import 'package:strive/screens/tabs_screen.dart';
 
