@@ -8,7 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 
-import 'package:strive/widgets/user_image_picker.dart';
+import 'package:strive/widgets/user/user_image_picker.dart';
 
 final _firebase = FirebaseAuth.instance;
 
