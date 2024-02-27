@@ -12,6 +12,8 @@ class _NewExerciseState extends State<NewExercise> {
   String _enteredName = '';
   String _enteredRecommendedSetsMin = '';
   String _enteredRecommendedSetsMax = '';
+  // String _enteredRecommendedRepsMin = '';
+  // String _enteredRecommendedRepsMax = '';
 
   void _submitExercise() {
     final isValid = _form.currentState!.validate();
@@ -19,6 +21,32 @@ class _NewExerciseState extends State<NewExercise> {
     if (!isValid) {
       return;
     }
+
+    _form.currentState!.save();
+
+    int setsMin = int.parse(_enteredRecommendedSetsMin);
+    int setsMax = int.parse(_enteredRecommendedSetsMax);
+    if (setsMin > setsMax) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Sets minimum can\'t be more than Sets Maximum'),
+        ),
+      );
+      return;
+    }
+
+    // int repsMin = int.parse(_enteredRecommendedRepsMin);
+    // int repsMax = int.parse(_enteredRecommendedRepsMax);
+    // if (setsMin > setsMax) {
+    //   ScaffoldMessenger.of(context).clearSnackBars();
+    //   ScaffoldMessenger.of(context).showSnackBar(
+    //     const SnackBar(
+    //       content: Text('Reps minimum can\'t be more than Reps Maximum'),
+    //     ),
+    //   );
+    //   return;
+    // }
 
     /* Add to Firebase */
 
@@ -44,6 +72,9 @@ class _NewExerciseState extends State<NewExercise> {
               }
               return null;
             },
+          ),
+          const SizedBox(
+            height: 20,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
