@@ -15,9 +15,7 @@ class CreateExerciseScreen extends StatelessWidget {
         width: double.infinity,
         height: double.infinity,
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: const Center(
-          child: NewExercise(),
-        ),
+        child: const NewExercise(),
       ),
     );
   }
