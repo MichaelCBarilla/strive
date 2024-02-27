@@ -8,6 +8,7 @@ import 'package:strive/firebase_options.dart';
 import 'package:strive/screens/auth_screen.dart';
 import 'package:strive/screens/programs_screen.dart';
 import 'package:strive/screens/loading_screen.dart';
+import 'package:strive/screens/tabs_screen.dart';
 
 var kColorScheme = ColorScheme.fromSeed(
   seedColor: const Color.fromARGB(255, 29, 84, 193),
@@ -48,7 +49,7 @@ class MainApp extends ConsumerWidget {
               return const LoadingScreen();
             }
             if (snapshot.hasData) {
-              return const ProgramsScreen();
+              return const TabsScreen();
             }
             return const AuthScreen();
           },
