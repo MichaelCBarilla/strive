@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:strive/widgets/workout_category/new_program.dart';
 
 class CreateProgramScreen extends StatelessWidget {
   const CreateProgramScreen({super.key});
@@ -8,20 +9,15 @@ class CreateProgramScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.primaryContainer,
       appBar: AppBar(
-        title: const Text('Strive'),
-        actions: [
-          IconButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              icon: Icon(
-                Icons.arrow_back,
-                color: Theme.of(context).colorScheme.onPrimary,
-              ))
-        ],
+        title: const Text('Create Program'),
       ),
-      body: const Center(
-        child: Text('create Program'),
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
+        child: const Center(
+          child: NewProgram(),
+        ),
       ),
     );
   }

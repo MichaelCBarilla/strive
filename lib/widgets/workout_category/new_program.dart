@@ -9,9 +9,9 @@ class NewProgram extends StatefulWidget {
 
 class _NewProgramState extends State<NewProgram> {
   final _form = GlobalKey<FormState>();
-  String _enteredTitle = '';
+  String _enteredName = '';
 
-  void _submitCategory() {
+  void _submitProgram() {
     final isValid = _form.currentState!.validate();
 
     if (!isValid) {
@@ -25,49 +25,80 @@ class _NewProgramState extends State<NewProgram> {
 
   @override
   Widget build(BuildContext context) {
-    final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 16, 16, keyboardSpace + 16),
-      child: SizedBox(
-        height: double.infinity,
-        child: Form(
-          key: _form,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+    return Form(
+      key: _form,
+      child: Column(
+        children: [
+          TextFormField(
+            decoration: const InputDecoration(
+              label: Text('Program Name'),
+            ),
+            onSaved: (value) {
+              _enteredName = value!;
+            },
+            validator: (value) {
+              if (value == null || value.trim().isEmpty) {
+                return 'Please enter a valid program name.';
+              }
+            },
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              TextFormField(
-                decoration: const InputDecoration(
-                  label: Text('Title'),
-                ),
-                onSaved: (value) {
-                  _enteredTitle = value!;
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context);
                 },
-                validator: (value) {
-                  if (value == null || value.trim().isEmpty) {
-                    return 'Please enter a valid category title.';
-                  }
-                },
+                child: const Text('Cancel'),
               ),
-              const Spacer(),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Cancel'),
-                  ),
-                  ElevatedButton(
-                    onPressed: _submitCategory,
-                    child: const Text('Create Program'),
-                  ),
-                ],
-              )
+              ElevatedButton(
+                onPressed: _submitProgram,
+                child: const Text('Create Program'),
+              ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }
 }
+
+// Form(
+//       key: _form,
+//       child: ListView(
+//         children: [
+//           TextFormField(
+//             decoration: const InputDecoration(
+//               label: Text('Title'),
+//             ),
+//             onSaved: (value) {
+//               _enteredTitle = value!;
+//             },
+//             validator: (value) {
+//               if (value == null || value.trim().isEmpty) {
+//                 return 'Please enter a valid category title.';
+//               }
+//             },
+//           ),
+//           const Spacer(),
+//           Row(
+//             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//             children: [
+//               TextButton(
+//                 onPressed: () {
+//                   Navigator.pop(context);
+//                 },
+//                 child: const Text('Cancel'),
+//               ),
+//               ElevatedButton(
+//                 onPressed: _submitCategory,
+//                 child: const Text('Create Program'),
+//               ),
+//             ],
+//           )
+//         ],
+//       ),
+//     );

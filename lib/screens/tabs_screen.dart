@@ -46,7 +46,9 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         width: double.infinity,
         height: double.infinity,
         margin: const EdgeInsets.fromLTRB(20, 0, 20, 0),
-        child: activePage,
+        child: Center(
+          child: activePage,
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: ref.read(appStateNotifierProvider.notifier).setSelectedPageIndex,
