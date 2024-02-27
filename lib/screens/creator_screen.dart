@@ -18,23 +18,32 @@ class CreatorScreen extends StatelessWidget {
     return Center(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-        child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Expanded(
+            const Text('What do you want to create?'),
+            SizedBox(
+              width: 200,
+              height: 70,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text('Add Program'),
+                child: const Text('Program'),
               ),
             ),
-            const SizedBox(
-              width: 20,
-            ),
-            Expanded(
+            SizedBox(
+              width: 200,
+              height: 70,
               child: ElevatedButton(
                 onPressed: () {},
-                child: const Text('Add Workout'),
+                child: const Text('Workout'),
+              ),
+            ),
+            SizedBox(
+              width: 200,
+              height: 70,
+              child: ElevatedButton(
+                onPressed: () {},
+                child: const Text('Exercise'),
               ),
             ),
           ],
