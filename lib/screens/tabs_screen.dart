@@ -2,7 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:strive/screens/creator_screen.dart';
+import 'package:strive/providers/meta/app_state.dart';
+import 'package:strive/screens/create/creator_screen.dart';
 import 'package:strive/screens/explore_screen.dart';
 import 'package:strive/screens/programs_screen.dart';
 
@@ -14,20 +15,13 @@ class TabsScreen extends ConsumerStatefulWidget {
 }
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
-  int _selectedPageIndex = 0;
-
-  void selectPage(int index) {
-    setState(() {
-      _selectedPageIndex = index;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
+    final appState = ref.watch(appStateNotifierProvider);
     Widget activePage;
-    if (_selectedPageIndex == 0) {
+    if (appState.selectedPageIndex == 0) {
       activePage = const ProgramsScreen();
-    } else if (_selectedPageIndex == 1) {
+    } else if (appState.selectedPageIndex == 1) {
       activePage = const ExploreScreen();
     } else {
       activePage = const CreatorScreen();
@@ -55,8 +49,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         child: activePage,
       ),
       bottomNavigationBar: BottomNavigationBar(
-        onTap: selectPage,
-        currentIndex: _selectedPageIndex,
+        onTap: ref.read(appStateNotifierProvider.notifier).setSelectedPageIndex,
+        currentIndex: appState.selectedPageIndex,
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
@@ -68,7 +62,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.construction),
-            label: 'Creator',
+            label: 'Create',
           ),
         ],
       ),

@@ -1,5 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:strive/models/exercise.dart';
+
+import 'package:strive/models/fitness/exercise.dart';
 
 part 'workout.freezed.dart';
 

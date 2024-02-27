@@ -1,17 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:strive/screens/create/create_program_screen.dart';
 
 class CreatorScreen extends StatelessWidget {
   const CreatorScreen({super.key});
 
-  // void _openAddCategoryOverlay() {
-  //   showModalBottomSheet(
-  //     context: context,
-  //     builder: (ctx) => const NewProgram(),
-  //     isScrollControlled: true,
-  //     constraints: const BoxConstraints(maxWidth: double.infinity),
-  //     useSafeArea: true,
-  //   );
-  // }
+  void _selectCreation(BuildContext context, String creation) {}
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +19,14 @@ class CreatorScreen extends StatelessWidget {
               width: 200,
               height: 70,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (ctx) {
+                      return const CreateProgramScreen();
+                    }),
+                  );
+                },
                 child: const Text('Program'),
               ),
             ),
@@ -34,7 +34,14 @@ class CreatorScreen extends StatelessWidget {
               width: 200,
               height: 70,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (ctx) {
+                      return const CreateProgramScreen();
+                    }),
+                  );
+                },
                 child: const Text('Workout'),
               ),
             ),
@@ -42,7 +49,14 @@ class CreatorScreen extends StatelessWidget {
               width: 200,
               height: 70,
               child: ElevatedButton(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (ctx) {
+                      return const CreateProgramScreen();
+                    }),
+                  );
+                },
                 child: const Text('Exercise'),
               ),
             ),
