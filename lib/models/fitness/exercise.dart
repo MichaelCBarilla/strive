@@ -3,8 +3,8 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'exercise.freezed.dart';
 
 enum RepType {
-  reps,
-  holds,
+  count,
+  duration,
 }
 
 @freezed

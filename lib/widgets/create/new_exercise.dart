@@ -68,10 +68,10 @@ class _NewExerciseState extends State<NewExercise> {
           'name': _enteredName,
           'creatorsUsername': userData['username'],
           'creationDate': DateTime.now(),
-          'recommendedSetsMax': _enteredRecommendedSetsMax,
-          'recommendedSetsMin': _enteredRecommendedSetsMin,
-          'recommendedRepsMax': _enteredRecommendedRepsMax,
-          'recommendedRepsMin': _enteredRecommendedRepsMin,
+          'recommendedSetsMax': setsMax,
+          'recommendedSetsMin': setsMin,
+          'recommendedRepsMax': repsMax,
+          'recommendedRepsMin': repsMin,
           'repType': _enteredRepType,
         });
         print('Object added to collection successfully');

@@ -17,7 +17,6 @@ class _NewWorkoutState extends State<NewWorkout> {
   List<ExercisePointer> addedExercises = [];
 
   _openAddExerciseOverlay() {
-    print('open add exercise overlay');
     showModalBottomSheet(
       context: context,
       builder: (ctx) => AddExercise(onAddExercise: _addExercise),
