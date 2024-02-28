@@ -1,6 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:strive/models/fitness/workout.dart';
+import 'package:strive/widgets/create/add_exercise.dart';
 
 class NewWorkout extends StatefulWidget {
   const NewWorkout({super.key});
@@ -12,6 +14,24 @@ class NewWorkout extends StatefulWidget {
 class _NewWorkoutState extends State<NewWorkout> {
   final _form = GlobalKey<FormState>();
   String _enteredName = '';
+  List<ExercisePointer> addedExercises = [];
+
+  _openAddExerciseOverlay() {
+    print('open add exercise overlay');
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => AddExercise(onAddExercise: _addExercise),
+      isScrollControlled: true,
+      constraints: const BoxConstraints(maxWidth: double.infinity),
+      useSafeArea: true,
+    );
+  }
+
+  void _addExercise(ExercisePointer exercisePointer) {
+    setState(() {
+      addedExercises.add(exercisePointer);
+    });
+  }
 
   void _submitWorkout() async {
     final isValid = _form.currentState!.validate();
@@ -67,6 +87,19 @@ class _NewWorkoutState extends State<NewWorkout> {
                 }
                 return null;
               },
+            ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text('Add Exercise'),
+                IconButton(
+                  onPressed: _openAddExerciseOverlay,
+                  icon: const Icon(Icons.add),
+                ),
+              ],
             ),
             const SizedBox(
               height: 20,
