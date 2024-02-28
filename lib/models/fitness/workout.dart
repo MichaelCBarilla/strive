@@ -1,15 +1,21 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:strive/models/fitness/exercise.dart';
-
 part 'workout.freezed.dart';
+
+@freezed
+class ExercisePointer with _$ExercisePointer {
+  const factory ExercisePointer({
+    required String id,
+    required String position,
+  }) = _ExercisePointer;
+}
 
 @freezed
 class Workout with _$Workout {
   const factory Workout({
     required String id,
     required String name,
-    required List<Exercise> exercises,
+    required List<ExercisePointer> exercisePointers,
     required DateTime creationDate,
     required String creatorUsername,
   }) = _Workout;
