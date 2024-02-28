@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:strive/screens/create/create_exercise.dart';
 import 'package:strive/screens/create/create_program_screen.dart';
+import 'package:strive/screens/create/create_workout.dart';
 
 class CreateScreen extends StatelessWidget {
   const CreateScreen({super.key});
@@ -34,7 +35,7 @@ class CreateScreen extends StatelessWidget {
               Navigator.push(
                 context,
                 MaterialPageRoute(builder: (ctx) {
-                  return const CreateProgramScreen();
+                  return const CreateWorkoutScreen();
                 }),
               );
             },

@@ -1,7 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:strive/util/string.dart';
 
 class NewExercise extends StatefulWidget {
   const NewExercise({super.key});
@@ -83,7 +82,9 @@ class _NewExerciseState extends State<NewExercise> {
       print('Error adding object to collection: $e');
     }
 
-    Navigator.pop(context);
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
   }
 
   @override
