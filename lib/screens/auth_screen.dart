@@ -134,7 +134,7 @@ class _AuthScreenState extends ConsumerState<AuthScreen> {
       await user.update({
         'weights': [
           {
-            'value': _enteredWeight,
+            'value': int.parse(_enteredWeight!),
             'weightType': _enteredWeightType,
             'dateEntered': now,
           }
