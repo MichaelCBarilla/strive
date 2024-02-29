@@ -12,14 +12,20 @@ part of 'strive_user.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+
+Weight _$WeightFromJson(Map<String, dynamic> json) {
+  return _Weight.fromJson(json);
+}
 
 /// @nodoc
 mixin _$Weight {
   double get value => throw _privateConstructorUsedError;
   WeightType get weightType => throw _privateConstructorUsedError;
-  DateTime get dateEntered => throw _privateConstructorUsedError;
+  @TimestampOrNullConverter()
+  DateTime? get dateEntered => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $WeightCopyWith<Weight> get copyWith => throw _privateConstructorUsedError;
 }
@@ -29,7 +35,10 @@ abstract class $WeightCopyWith<$Res> {
   factory $WeightCopyWith(Weight value, $Res Function(Weight) then) =
       _$WeightCopyWithImpl<$Res, Weight>;
   @useResult
-  $Res call({double value, WeightType weightType, DateTime dateEntered});
+  $Res call(
+      {double value,
+      WeightType weightType,
+      @TimestampOrNullConverter() DateTime? dateEntered});
 }
 
 /// @nodoc
@@ -47,7 +56,7 @@ class _$WeightCopyWithImpl<$Res, $Val extends Weight>
   $Res call({
     Object? value = null,
     Object? weightType = null,
-    Object? dateEntered = null,
+    Object? dateEntered = freezed,
   }) {
     return _then(_value.copyWith(
       value: null == value
@@ -58,10 +67,10 @@ class _$WeightCopyWithImpl<$Res, $Val extends Weight>
           ? _value.weightType
           : weightType // ignore: cast_nullable_to_non_nullable
               as WeightType,
-      dateEntered: null == dateEntered
+      dateEntered: freezed == dateEntered
           ? _value.dateEntered
           : dateEntered // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -73,7 +82,10 @@ abstract class _$$WeightImplCopyWith<$Res> implements $WeightCopyWith<$Res> {
       __$$WeightImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({double value, WeightType weightType, DateTime dateEntered});
+  $Res call(
+      {double value,
+      WeightType weightType,
+      @TimestampOrNullConverter() DateTime? dateEntered});
 }
 
 /// @nodoc
@@ -89,7 +101,7 @@ class __$$WeightImplCopyWithImpl<$Res>
   $Res call({
     Object? value = null,
     Object? weightType = null,
-    Object? dateEntered = null,
+    Object? dateEntered = freezed,
   }) {
     return _then(_$WeightImpl(
       value: null == value
@@ -100,28 +112,32 @@ class __$$WeightImplCopyWithImpl<$Res>
           ? _value.weightType
           : weightType // ignore: cast_nullable_to_non_nullable
               as WeightType,
-      dateEntered: null == dateEntered
+      dateEntered: freezed == dateEntered
           ? _value.dateEntered
           : dateEntered // ignore: cast_nullable_to_non_nullable
-              as DateTime,
+              as DateTime?,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$WeightImpl implements _Weight {
   const _$WeightImpl(
       {required this.value,
       required this.weightType,
-      required this.dateEntered});
+      @TimestampOrNullConverter() required this.dateEntered});
+
+  factory _$WeightImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WeightImplFromJson(json);
 
   @override
   final double value;
   @override
   final WeightType weightType;
   @override
-  final DateTime dateEntered;
+  @TimestampOrNullConverter()
+  final DateTime? dateEntered;
 
   @override
   String toString() {
@@ -140,6 +156,7 @@ class _$WeightImpl implements _Weight {
                 other.dateEntered == dateEntered));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, value, weightType, dateEntered);
 
@@ -148,24 +165,39 @@ class _$WeightImpl implements _Weight {
   @pragma('vm:prefer-inline')
   _$$WeightImplCopyWith<_$WeightImpl> get copyWith =>
       __$$WeightImplCopyWithImpl<_$WeightImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$WeightImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Weight implements Weight {
   const factory _Weight(
-      {required final double value,
-      required final WeightType weightType,
-      required final DateTime dateEntered}) = _$WeightImpl;
+          {required final double value,
+          required final WeightType weightType,
+          @TimestampOrNullConverter() required final DateTime? dateEntered}) =
+      _$WeightImpl;
+
+  factory _Weight.fromJson(Map<String, dynamic> json) = _$WeightImpl.fromJson;
 
   @override
   double get value;
   @override
   WeightType get weightType;
   @override
-  DateTime get dateEntered;
+  @TimestampOrNullConverter()
+  DateTime? get dateEntered;
   @override
   @JsonKey(ignore: true)
   _$$WeightImplCopyWith<_$WeightImpl> get copyWith =>
       throw _privateConstructorUsedError;
+}
+
+StriveUser _$StriveUserFromJson(Map<String, dynamic> json) {
+  return _StriveUser.fromJson(json);
 }
 
 /// @nodoc
@@ -174,10 +206,14 @@ mixin _$StriveUser {
   String? get username => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
   String? get imageUrl => throw _privateConstructorUsedError;
+  @TimestampOrNullConverter()
   DateTime? get birthdate => throw _privateConstructorUsedError;
   List<Weight>? get weights => throw _privateConstructorUsedError;
+  @TimestampOrNullConverter()
   DateTime? get creationDate => throw _privateConstructorUsedError;
+  List<String> get savedExercises => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $StriveUserCopyWith<StriveUser> get copyWith =>
       throw _privateConstructorUsedError;
@@ -194,9 +230,10 @@ abstract class $StriveUserCopyWith<$Res> {
       String? username,
       String? email,
       String? imageUrl,
-      DateTime? birthdate,
+      @TimestampOrNullConverter() DateTime? birthdate,
       List<Weight>? weights,
-      DateTime? creationDate});
+      @TimestampOrNullConverter() DateTime? creationDate,
+      List<String> savedExercises});
 }
 
 /// @nodoc
@@ -219,6 +256,7 @@ class _$StriveUserCopyWithImpl<$Res, $Val extends StriveUser>
     Object? birthdate = freezed,
     Object? weights = freezed,
     Object? creationDate = freezed,
+    Object? savedExercises = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -249,6 +287,10 @@ class _$StriveUserCopyWithImpl<$Res, $Val extends StriveUser>
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      savedExercises: null == savedExercises
+          ? _value.savedExercises
+          : savedExercises // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -266,9 +308,10 @@ abstract class _$$StriveUserImplCopyWith<$Res>
       String? username,
       String? email,
       String? imageUrl,
-      DateTime? birthdate,
+      @TimestampOrNullConverter() DateTime? birthdate,
       List<Weight>? weights,
-      DateTime? creationDate});
+      @TimestampOrNullConverter() DateTime? creationDate,
+      List<String> savedExercises});
 }
 
 /// @nodoc
@@ -289,6 +332,7 @@ class __$$StriveUserImplCopyWithImpl<$Res>
     Object? birthdate = freezed,
     Object? weights = freezed,
     Object? creationDate = freezed,
+    Object? savedExercises = null,
   }) {
     return _then(_$StriveUserImpl(
       id: freezed == id
@@ -319,22 +363,31 @@ class __$$StriveUserImplCopyWithImpl<$Res>
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      savedExercises: null == savedExercises
+          ? _value._savedExercises
+          : savedExercises // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$StriveUserImpl implements _StriveUser {
   const _$StriveUserImpl(
       {required this.id,
       required this.username,
       required this.email,
       required this.imageUrl,
-      required this.birthdate,
+      @TimestampOrNullConverter() required this.birthdate,
       required final List<Weight>? weights,
-      required this.creationDate})
-      : _weights = weights;
+      @TimestampOrNullConverter() required this.creationDate,
+      required final List<String> savedExercises})
+      : _weights = weights,
+        _savedExercises = savedExercises;
+
+  factory _$StriveUserImpl.fromJson(Map<String, dynamic> json) =>
+      _$$StriveUserImplFromJson(json);
 
   @override
   final String? id;
@@ -345,6 +398,7 @@ class _$StriveUserImpl implements _StriveUser {
   @override
   final String? imageUrl;
   @override
+  @TimestampOrNullConverter()
   final DateTime? birthdate;
   final List<Weight>? _weights;
   @override
@@ -357,11 +411,19 @@ class _$StriveUserImpl implements _StriveUser {
   }
 
   @override
+  @TimestampOrNullConverter()
   final DateTime? creationDate;
+  final List<String> _savedExercises;
+  @override
+  List<String> get savedExercises {
+    if (_savedExercises is EqualUnmodifiableListView) return _savedExercises;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_savedExercises);
+  }
 
   @override
   String toString() {
-    return 'StriveUser(id: $id, username: $username, email: $email, imageUrl: $imageUrl, birthdate: $birthdate, weights: $weights, creationDate: $creationDate)';
+    return 'StriveUser(id: $id, username: $username, email: $email, imageUrl: $imageUrl, birthdate: $birthdate, weights: $weights, creationDate: $creationDate, savedExercises: $savedExercises)';
   }
 
   @override
@@ -379,18 +441,36 @@ class _$StriveUserImpl implements _StriveUser {
                 other.birthdate == birthdate) &&
             const DeepCollectionEquality().equals(other._weights, _weights) &&
             (identical(other.creationDate, creationDate) ||
-                other.creationDate == creationDate));
+                other.creationDate == creationDate) &&
+            const DeepCollectionEquality()
+                .equals(other._savedExercises, _savedExercises));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, username, email, imageUrl,
-      birthdate, const DeepCollectionEquality().hash(_weights), creationDate);
+  int get hashCode => Object.hash(
+      runtimeType,
+      id,
+      username,
+      email,
+      imageUrl,
+      birthdate,
+      const DeepCollectionEquality().hash(_weights),
+      creationDate,
+      const DeepCollectionEquality().hash(_savedExercises));
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
   _$$StriveUserImplCopyWith<_$StriveUserImpl> get copyWith =>
       __$$StriveUserImplCopyWithImpl<_$StriveUserImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$StriveUserImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _StriveUser implements StriveUser {
@@ -399,9 +479,13 @@ abstract class _StriveUser implements StriveUser {
       required final String? username,
       required final String? email,
       required final String? imageUrl,
-      required final DateTime? birthdate,
+      @TimestampOrNullConverter() required final DateTime? birthdate,
       required final List<Weight>? weights,
-      required final DateTime? creationDate}) = _$StriveUserImpl;
+      @TimestampOrNullConverter() required final DateTime? creationDate,
+      required final List<String> savedExercises}) = _$StriveUserImpl;
+
+  factory _StriveUser.fromJson(Map<String, dynamic> json) =
+      _$StriveUserImpl.fromJson;
 
   @override
   String? get id;
@@ -412,11 +496,15 @@ abstract class _StriveUser implements StriveUser {
   @override
   String? get imageUrl;
   @override
+  @TimestampOrNullConverter()
   DateTime? get birthdate;
   @override
   List<Weight>? get weights;
   @override
+  @TimestampOrNullConverter()
   DateTime? get creationDate;
+  @override
+  List<String> get savedExercises;
   @override
   @JsonKey(ignore: true)
   _$$StriveUserImplCopyWith<_$StriveUserImpl> get copyWith =>
