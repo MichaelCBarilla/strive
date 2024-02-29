@@ -53,6 +53,7 @@ class _NewWorkoutState extends State<NewWorkout> {
           'name': _enteredName,
           'creatorsUsername': userData['username'],
           'creationDate': DateTime.now(),
+          'workoutExercises': addedExercises,
         });
         print('Workout added to collection successfully');
       } else {
