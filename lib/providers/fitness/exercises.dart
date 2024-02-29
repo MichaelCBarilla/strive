@@ -19,13 +19,13 @@ class Exercises extends _$Exercises {
           .map((doc) => Exercise(
                 id: doc.id,
                 name: doc.data()['name'],
+                creatorsUsername: doc.data()['creatorsUsername'],
                 creationDate: doc.data()['creationDate'].toDate(),
                 recommendedSetsMax: doc.data()['recommendedSetsMax'],
                 recommendedSetsMin: doc.data()['recommendedSetsMin'],
                 recommendedRepsMax: doc.data()['recommendedRepsMax'],
                 recommendedRepsMin: doc.data()['recommendedRepsMin'],
                 repType: convertStringToEnum(doc.data()['repType']),
-                // repType: RepType.holds,
               ))
           .toList();
       yield data;
