@@ -12,6 +12,7 @@ class Exercise with _$Exercise {
   const factory Exercise({
     required String id,
     required String name,
+    required String creatorsUsername,
     required DateTime creationDate,
     required int recommendedSetsMax,
     required int recommendedSetsMin,
