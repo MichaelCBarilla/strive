@@ -7,7 +7,7 @@ part of 'strive_user.dart';
 // **************************************************************************
 
 String _$striveUserNotifierHash() =>
-    r'b550420073a9f30af40899cf4e766c872cd81a92';
+    r'858bfe5f13ba23c3a060d137ad81d3392e61b646';
 
 /// See also [StriveUserNotifier].
 @ProviderFor(StriveUserNotifier)
