@@ -1,8 +1,11 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:strive/models/meta/strive_user.dart';
 import 'package:strive/providers/meta/app_state.dart';
+import 'package:strive/providers/meta/strive_user.dart';
 import 'package:strive/screens/create/create_screen.dart';
 import 'package:strive/screens/explore_screen.dart';
 import 'package:strive/screens/programs_screen.dart';
@@ -15,6 +18,49 @@ class TabsScreen extends ConsumerStatefulWidget {
 }
 
 class _TabsScreenState extends ConsumerState<TabsScreen> {
+  bool _isUserSet = false;
+
+  @override
+  void initState() {
+    super.initState();
+    Future(() {
+      _setUser();
+    });
+  }
+
+  void _setUser() async {
+    final currentUser = FirebaseAuth.instance.currentUser;
+    if (currentUser == null) {
+      print('couldn\'t find the current user.');
+      return;
+    }
+    // Get the reference to the document
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(currentUser.uid);
+
+    try {
+      // Fetch the document snapshot
+      DocumentSnapshot documentSnapshot = await documentReference.get();
+
+      // Check if the document exists
+      if (documentSnapshot.exists) {
+        // Access the data as a Map and create an object
+        Map<String, dynamic> data =
+            documentSnapshot.data() as Map<String, dynamic>;
+        data['id'] = documentSnapshot.id;
+
+        // Create your object using the retrieved data
+        StriveUser striveUser = StriveUser.fromJson(data);
+
+        ref.read(striveUserNotifierProvider.notifier).setUser(striveUser);
+      } else {
+        print('Document does not exist');
+      }
+    } catch (e) {
+      print('Error getting document: $e');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final appState = ref.watch(appStateNotifierProvider);

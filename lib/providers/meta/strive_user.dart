@@ -23,25 +23,16 @@ class StriveUserNotifier extends _$StriveUserNotifier {
     );
   }
 
-  void setUser(
-    String newId,
-    String newUsername,
-    String newEmail,
-    String newImageUrl,
-    DateTime newBirthdate,
-    List<Weight> newWeights,
-    DateTime newCreationDate,
-    List<String> newSavedExercises,
-  ) {
+  void setUser(StriveUser newStriveUser) {
     state = state.copyWith(
-      id: newId,
-      username: newUsername,
-      email: newEmail,
-      imageUrl: newImageUrl,
-      birthdate: newBirthdate,
-      weights: newWeights,
-      creationDate: newCreationDate,
-      savedExercises: newSavedExercises,
+      id: newStriveUser.id,
+      username: newStriveUser.username,
+      email: newStriveUser.email,
+      imageUrl: newStriveUser.imageUrl,
+      birthdate: newStriveUser.birthdate,
+      weights: newStriveUser.weights,
+      creationDate: newStriveUser.creationDate,
+      savedExercises: newStriveUser.savedExercises,
     );
   }
 
@@ -73,24 +64,24 @@ class StriveUserNotifier extends _$StriveUserNotifier {
 
     print(state.id);
 
-    // DocumentReference documentReference =
-    //     FirebaseFirestore.instance.collection('users').doc(state.id);
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(state.id);
 
-    // try {
-    //   await documentReference.update({
-    //     'savedExercises': FieldValue.arrayUnion([savedExerciseId]),
-    //   });
-    //   print(
-    //       'exercise added to the user\'s list of savedExercises successfully!');
-    // } catch (e) {
-    //   print('Error adding exercise to the list of savedExercises: $e');
-    //   return false;
-    // }
+    try {
+      await documentReference.update({
+        'savedExercises': FieldValue.arrayUnion([savedExerciseId]),
+      });
+      print(
+          'exercise added to the user\'s list of savedExercises successfully!');
+    } catch (e) {
+      print('Error adding exercise to the list of savedExercises: $e');
+      return false;
+    }
     return true;
   }
 
   Future<bool> removeExercise(String removedExerciseId) async {
-    final newSavedExercises = state.savedExercises;
+    final newSavedExercises = [...state.savedExercises];
     newSavedExercises.remove(removedExerciseId);
     state = state.copyWith(savedExercises: newSavedExercises);
 
