@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:intl/intl.dart';
 
 import 'package:strive/models/fitness/workout.dart';
 import 'package:strive/providers/fitness/exercises.dart';
+import 'package:strive/widgets/display/exercise_details.dart';
+import 'package:strive/widgets/display/list_display_button.dart';
 
 class AddExercise extends ConsumerStatefulWidget {
   const AddExercise({
@@ -66,14 +67,21 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        return ListTile(
-                          title: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              children: [
-                                Text(exercises[index].name),
-                              ],
-                            ),
+                        return ListDisplayButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (ctx) {
+                                return ExerciseDetails(
+                                  exercise: exercises[index],
+                                );
+                              }),
+                            );
+                          },
+                          title: Text(exercises[index].name),
+                          trailing: IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () => print('add exercise'),
                           ),
                         );
                       },
