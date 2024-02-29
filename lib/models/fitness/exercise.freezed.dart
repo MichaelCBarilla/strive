@@ -12,12 +12,13 @@ part of 'exercise.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$Exercise {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get creatorsUsername => throw _privateConstructorUsedError;
   DateTime get creationDate => throw _privateConstructorUsedError;
   int get recommendedSetsMax => throw _privateConstructorUsedError;
   int get recommendedSetsMin => throw _privateConstructorUsedError;
@@ -38,6 +39,7 @@ abstract class $ExerciseCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
+      String creatorsUsername,
       DateTime creationDate,
       int recommendedSetsMax,
       int recommendedSetsMin,
@@ -61,6 +63,7 @@ class _$ExerciseCopyWithImpl<$Res, $Val extends Exercise>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? creatorsUsername = null,
     Object? creationDate = null,
     Object? recommendedSetsMax = null,
     Object? recommendedSetsMin = null,
@@ -76,6 +79,10 @@ class _$ExerciseCopyWithImpl<$Res, $Val extends Exercise>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      creatorsUsername: null == creatorsUsername
+          ? _value.creatorsUsername
+          : creatorsUsername // ignore: cast_nullable_to_non_nullable
               as String,
       creationDate: null == creationDate
           ? _value.creationDate
@@ -116,6 +123,7 @@ abstract class _$$ExerciseImplCopyWith<$Res>
   $Res call(
       {String id,
       String name,
+      String creatorsUsername,
       DateTime creationDate,
       int recommendedSetsMax,
       int recommendedSetsMin,
@@ -137,6 +145,7 @@ class __$$ExerciseImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
+    Object? creatorsUsername = null,
     Object? creationDate = null,
     Object? recommendedSetsMax = null,
     Object? recommendedSetsMin = null,
@@ -152,6 +161,10 @@ class __$$ExerciseImplCopyWithImpl<$Res>
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      creatorsUsername: null == creatorsUsername
+          ? _value.creatorsUsername
+          : creatorsUsername // ignore: cast_nullable_to_non_nullable
               as String,
       creationDate: null == creationDate
           ? _value.creationDate
@@ -187,6 +200,7 @@ class _$ExerciseImpl implements _Exercise {
   const _$ExerciseImpl(
       {required this.id,
       required this.name,
+      required this.creatorsUsername,
       required this.creationDate,
       required this.recommendedSetsMax,
       required this.recommendedSetsMin,
@@ -198,6 +212,8 @@ class _$ExerciseImpl implements _Exercise {
   final String id;
   @override
   final String name;
+  @override
+  final String creatorsUsername;
   @override
   final DateTime creationDate;
   @override
@@ -213,7 +229,7 @@ class _$ExerciseImpl implements _Exercise {
 
   @override
   String toString() {
-    return 'Exercise(id: $id, name: $name, creationDate: $creationDate, recommendedSetsMax: $recommendedSetsMax, recommendedSetsMin: $recommendedSetsMin, recommendedRepsMax: $recommendedRepsMax, recommendedRepsMin: $recommendedRepsMin, repType: $repType)';
+    return 'Exercise(id: $id, name: $name, creatorsUsername: $creatorsUsername, creationDate: $creationDate, recommendedSetsMax: $recommendedSetsMax, recommendedSetsMin: $recommendedSetsMin, recommendedRepsMax: $recommendedRepsMax, recommendedRepsMin: $recommendedRepsMin, repType: $repType)';
   }
 
   @override
@@ -223,6 +239,8 @@ class _$ExerciseImpl implements _Exercise {
             other is _$ExerciseImpl &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
+            (identical(other.creatorsUsername, creatorsUsername) ||
+                other.creatorsUsername == creatorsUsername) &&
             (identical(other.creationDate, creationDate) ||
                 other.creationDate == creationDate) &&
             (identical(other.recommendedSetsMax, recommendedSetsMax) ||
@@ -241,6 +259,7 @@ class _$ExerciseImpl implements _Exercise {
       runtimeType,
       id,
       name,
+      creatorsUsername,
       creationDate,
       recommendedSetsMax,
       recommendedSetsMin,
@@ -259,6 +278,7 @@ abstract class _Exercise implements Exercise {
   const factory _Exercise(
       {required final String id,
       required final String name,
+      required final String creatorsUsername,
       required final DateTime creationDate,
       required final int recommendedSetsMax,
       required final int recommendedSetsMin,
@@ -270,6 +290,8 @@ abstract class _Exercise implements Exercise {
   String get id;
   @override
   String get name;
+  @override
+  String get creatorsUsername;
   @override
   DateTime get creationDate;
   @override
