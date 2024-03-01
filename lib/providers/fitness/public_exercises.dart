@@ -4,10 +4,10 @@ import 'package:strive/models/fitness/exercise.dart';
 import 'package:strive/util/string.dart';
 
 // Necessary for code-generation to work
-part 'exercises.g.dart';
+part 'public_exercises.g.dart';
 
 @riverpod
-class Exercises extends _$Exercises {
+class PublicExercises extends _$PublicExercises {
   @override
   Stream<List<Exercise>> build() async* {
     ref.keepAlive();

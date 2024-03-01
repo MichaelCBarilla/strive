@@ -14,11 +14,16 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+ExercisePointer _$ExercisePointerFromJson(Map<String, dynamic> json) {
+  return _ExercisePointer.fromJson(json);
+}
+
 /// @nodoc
 mixin _$ExercisePointer {
-  List<String> get ids => throw _privateConstructorUsedError;
-  int get workoutPosition => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  int get positionInCycle => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ExercisePointerCopyWith<ExercisePointer> get copyWith =>
       throw _privateConstructorUsedError;
@@ -30,7 +35,7 @@ abstract class $ExercisePointerCopyWith<$Res> {
           ExercisePointer value, $Res Function(ExercisePointer) then) =
       _$ExercisePointerCopyWithImpl<$Res, ExercisePointer>;
   @useResult
-  $Res call({List<String> ids, int workoutPosition});
+  $Res call({String id, int positionInCycle});
 }
 
 /// @nodoc
@@ -46,17 +51,17 @@ class _$ExercisePointerCopyWithImpl<$Res, $Val extends ExercisePointer>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ids = null,
-    Object? workoutPosition = null,
+    Object? id = null,
+    Object? positionInCycle = null,
   }) {
     return _then(_value.copyWith(
-      ids: null == ids
-          ? _value.ids
-          : ids // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      workoutPosition: null == workoutPosition
-          ? _value.workoutPosition
-          : workoutPosition // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      positionInCycle: null == positionInCycle
+          ? _value.positionInCycle
+          : positionInCycle // ignore: cast_nullable_to_non_nullable
               as int,
     ) as $Val);
   }
@@ -70,7 +75,7 @@ abstract class _$$ExercisePointerImplCopyWith<$Res>
       __$$ExercisePointerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> ids, int workoutPosition});
+  $Res call({String id, int positionInCycle});
 }
 
 /// @nodoc
@@ -84,43 +89,39 @@ class __$$ExercisePointerImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? ids = null,
-    Object? workoutPosition = null,
+    Object? id = null,
+    Object? positionInCycle = null,
   }) {
     return _then(_$ExercisePointerImpl(
-      ids: null == ids
-          ? _value._ids
-          : ids // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      workoutPosition: null == workoutPosition
-          ? _value.workoutPosition
-          : workoutPosition // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      positionInCycle: null == positionInCycle
+          ? _value.positionInCycle
+          : positionInCycle // ignore: cast_nullable_to_non_nullable
               as int,
     ));
   }
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$ExercisePointerImpl implements _ExercisePointer {
   const _$ExercisePointerImpl(
-      {required final List<String> ids, required this.workoutPosition})
-      : _ids = ids;
+      {required this.id, required this.positionInCycle});
 
-  final List<String> _ids;
-  @override
-  List<String> get ids {
-    if (_ids is EqualUnmodifiableListView) return _ids;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_ids);
-  }
+  factory _$ExercisePointerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ExercisePointerImplFromJson(json);
 
   @override
-  final int workoutPosition;
+  final String id;
+  @override
+  final int positionInCycle;
 
   @override
   String toString() {
-    return 'ExercisePointer(ids: $ids, workoutPosition: $workoutPosition)';
+    return 'ExercisePointer(id: $id, positionInCycle: $positionInCycle)';
   }
 
   @override
@@ -128,14 +129,14 @@ class _$ExercisePointerImpl implements _ExercisePointer {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ExercisePointerImpl &&
-            const DeepCollectionEquality().equals(other._ids, _ids) &&
-            (identical(other.workoutPosition, workoutPosition) ||
-                other.workoutPosition == workoutPosition));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.positionInCycle, positionInCycle) ||
+                other.positionInCycle == positionInCycle));
   }
 
+  @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_ids), workoutPosition);
+  int get hashCode => Object.hash(runtimeType, id, positionInCycle);
 
   @JsonKey(ignore: true)
   @override
@@ -143,32 +144,216 @@ class _$ExercisePointerImpl implements _ExercisePointer {
   _$$ExercisePointerImplCopyWith<_$ExercisePointerImpl> get copyWith =>
       __$$ExercisePointerImplCopyWithImpl<_$ExercisePointerImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ExercisePointerImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _ExercisePointer implements ExercisePointer {
   const factory _ExercisePointer(
-      {required final List<String> ids,
-      required final int workoutPosition}) = _$ExercisePointerImpl;
+      {required final String id,
+      required final int positionInCycle}) = _$ExercisePointerImpl;
+
+  factory _ExercisePointer.fromJson(Map<String, dynamic> json) =
+      _$ExercisePointerImpl.fromJson;
 
   @override
-  List<String> get ids;
+  String get id;
   @override
-  int get workoutPosition;
+  int get positionInCycle;
   @override
   @JsonKey(ignore: true)
   _$$ExercisePointerImplCopyWith<_$ExercisePointerImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
+CyclePointer _$CyclePointerFromJson(Map<String, dynamic> json) {
+  return _CyclePointer.fromJson(json);
+}
+
+/// @nodoc
+mixin _$CyclePointer {
+  List<ExercisePointer> get exercisePointers =>
+      throw _privateConstructorUsedError;
+  int get positionInWorkout => throw _privateConstructorUsedError;
+
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $CyclePointerCopyWith<CyclePointer> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CyclePointerCopyWith<$Res> {
+  factory $CyclePointerCopyWith(
+          CyclePointer value, $Res Function(CyclePointer) then) =
+      _$CyclePointerCopyWithImpl<$Res, CyclePointer>;
+  @useResult
+  $Res call({List<ExercisePointer> exercisePointers, int positionInWorkout});
+}
+
+/// @nodoc
+class _$CyclePointerCopyWithImpl<$Res, $Val extends CyclePointer>
+    implements $CyclePointerCopyWith<$Res> {
+  _$CyclePointerCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exercisePointers = null,
+    Object? positionInWorkout = null,
+  }) {
+    return _then(_value.copyWith(
+      exercisePointers: null == exercisePointers
+          ? _value.exercisePointers
+          : exercisePointers // ignore: cast_nullable_to_non_nullable
+              as List<ExercisePointer>,
+      positionInWorkout: null == positionInWorkout
+          ? _value.positionInWorkout
+          : positionInWorkout // ignore: cast_nullable_to_non_nullable
+              as int,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$CyclePointerImplCopyWith<$Res>
+    implements $CyclePointerCopyWith<$Res> {
+  factory _$$CyclePointerImplCopyWith(
+          _$CyclePointerImpl value, $Res Function(_$CyclePointerImpl) then) =
+      __$$CyclePointerImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({List<ExercisePointer> exercisePointers, int positionInWorkout});
+}
+
+/// @nodoc
+class __$$CyclePointerImplCopyWithImpl<$Res>
+    extends _$CyclePointerCopyWithImpl<$Res, _$CyclePointerImpl>
+    implements _$$CyclePointerImplCopyWith<$Res> {
+  __$$CyclePointerImplCopyWithImpl(
+      _$CyclePointerImpl _value, $Res Function(_$CyclePointerImpl) _then)
+      : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? exercisePointers = null,
+    Object? positionInWorkout = null,
+  }) {
+    return _then(_$CyclePointerImpl(
+      exercisePointers: null == exercisePointers
+          ? _value._exercisePointers
+          : exercisePointers // ignore: cast_nullable_to_non_nullable
+              as List<ExercisePointer>,
+      positionInWorkout: null == positionInWorkout
+          ? _value.positionInWorkout
+          : positionInWorkout // ignore: cast_nullable_to_non_nullable
+              as int,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$CyclePointerImpl implements _CyclePointer {
+  const _$CyclePointerImpl(
+      {required final List<ExercisePointer> exercisePointers,
+      required this.positionInWorkout})
+      : _exercisePointers = exercisePointers;
+
+  factory _$CyclePointerImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CyclePointerImplFromJson(json);
+
+  final List<ExercisePointer> _exercisePointers;
+  @override
+  List<ExercisePointer> get exercisePointers {
+    if (_exercisePointers is EqualUnmodifiableListView)
+      return _exercisePointers;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_exercisePointers);
+  }
+
+  @override
+  final int positionInWorkout;
+
+  @override
+  String toString() {
+    return 'CyclePointer(exercisePointers: $exercisePointers, positionInWorkout: $positionInWorkout)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CyclePointerImpl &&
+            const DeepCollectionEquality()
+                .equals(other._exercisePointers, _exercisePointers) &&
+            (identical(other.positionInWorkout, positionInWorkout) ||
+                other.positionInWorkout == positionInWorkout));
+  }
+
+  @JsonKey(ignore: true)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      const DeepCollectionEquality().hash(_exercisePointers),
+      positionInWorkout);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CyclePointerImplCopyWith<_$CyclePointerImpl> get copyWith =>
+      __$$CyclePointerImplCopyWithImpl<_$CyclePointerImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CyclePointerImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _CyclePointer implements CyclePointer {
+  const factory _CyclePointer(
+      {required final List<ExercisePointer> exercisePointers,
+      required final int positionInWorkout}) = _$CyclePointerImpl;
+
+  factory _CyclePointer.fromJson(Map<String, dynamic> json) =
+      _$CyclePointerImpl.fromJson;
+
+  @override
+  List<ExercisePointer> get exercisePointers;
+  @override
+  int get positionInWorkout;
+  @override
+  @JsonKey(ignore: true)
+  _$$CyclePointerImplCopyWith<_$CyclePointerImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+Workout _$WorkoutFromJson(Map<String, dynamic> json) {
+  return _Workout.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Workout {
   String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
-  List<ExercisePointer> get exercisePointers =>
-      throw _privateConstructorUsedError;
+  List<CyclePointer> get cyclePointers => throw _privateConstructorUsedError;
   DateTime get creationDate => throw _privateConstructorUsedError;
   String get creatorUsername => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $WorkoutCopyWith<Workout> get copyWith => throw _privateConstructorUsedError;
 }
@@ -181,7 +366,7 @@ abstract class $WorkoutCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      List<ExercisePointer> exercisePointers,
+      List<CyclePointer> cyclePointers,
       DateTime creationDate,
       String creatorUsername});
 }
@@ -201,7 +386,7 @@ class _$WorkoutCopyWithImpl<$Res, $Val extends Workout>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? exercisePointers = null,
+    Object? cyclePointers = null,
     Object? creationDate = null,
     Object? creatorUsername = null,
   }) {
@@ -214,10 +399,10 @@ class _$WorkoutCopyWithImpl<$Res, $Val extends Workout>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      exercisePointers: null == exercisePointers
-          ? _value.exercisePointers
-          : exercisePointers // ignore: cast_nullable_to_non_nullable
-              as List<ExercisePointer>,
+      cyclePointers: null == cyclePointers
+          ? _value.cyclePointers
+          : cyclePointers // ignore: cast_nullable_to_non_nullable
+              as List<CyclePointer>,
       creationDate: null == creationDate
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
@@ -240,7 +425,7 @@ abstract class _$$WorkoutImplCopyWith<$Res> implements $WorkoutCopyWith<$Res> {
   $Res call(
       {String id,
       String name,
-      List<ExercisePointer> exercisePointers,
+      List<CyclePointer> cyclePointers,
       DateTime creationDate,
       String creatorUsername});
 }
@@ -258,7 +443,7 @@ class __$$WorkoutImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? name = null,
-    Object? exercisePointers = null,
+    Object? cyclePointers = null,
     Object? creationDate = null,
     Object? creatorUsername = null,
   }) {
@@ -271,10 +456,10 @@ class __$$WorkoutImplCopyWithImpl<$Res>
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
               as String,
-      exercisePointers: null == exercisePointers
-          ? _value._exercisePointers
-          : exercisePointers // ignore: cast_nullable_to_non_nullable
-              as List<ExercisePointer>,
+      cyclePointers: null == cyclePointers
+          ? _value._cyclePointers
+          : cyclePointers // ignore: cast_nullable_to_non_nullable
+              as List<CyclePointer>,
       creationDate: null == creationDate
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
@@ -288,27 +473,29 @@ class __$$WorkoutImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$WorkoutImpl implements _Workout {
   const _$WorkoutImpl(
       {required this.id,
       required this.name,
-      required final List<ExercisePointer> exercisePointers,
+      required final List<CyclePointer> cyclePointers,
       required this.creationDate,
       required this.creatorUsername})
-      : _exercisePointers = exercisePointers;
+      : _cyclePointers = cyclePointers;
+
+  factory _$WorkoutImpl.fromJson(Map<String, dynamic> json) =>
+      _$$WorkoutImplFromJson(json);
 
   @override
   final String id;
   @override
   final String name;
-  final List<ExercisePointer> _exercisePointers;
+  final List<CyclePointer> _cyclePointers;
   @override
-  List<ExercisePointer> get exercisePointers {
-    if (_exercisePointers is EqualUnmodifiableListView)
-      return _exercisePointers;
+  List<CyclePointer> get cyclePointers {
+    if (_cyclePointers is EqualUnmodifiableListView) return _cyclePointers;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_exercisePointers);
+    return EqualUnmodifiableListView(_cyclePointers);
   }
 
   @override
@@ -318,7 +505,7 @@ class _$WorkoutImpl implements _Workout {
 
   @override
   String toString() {
-    return 'Workout(id: $id, name: $name, exercisePointers: $exercisePointers, creationDate: $creationDate, creatorUsername: $creatorUsername)';
+    return 'Workout(id: $id, name: $name, cyclePointers: $cyclePointers, creationDate: $creationDate, creatorUsername: $creatorUsername)';
   }
 
   @override
@@ -329,19 +516,20 @@ class _$WorkoutImpl implements _Workout {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
-                .equals(other._exercisePointers, _exercisePointers) &&
+                .equals(other._cyclePointers, _cyclePointers) &&
             (identical(other.creationDate, creationDate) ||
                 other.creationDate == creationDate) &&
             (identical(other.creatorUsername, creatorUsername) ||
                 other.creatorUsername == creatorUsername));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
       id,
       name,
-      const DeepCollectionEquality().hash(_exercisePointers),
+      const DeepCollectionEquality().hash(_cyclePointers),
       creationDate,
       creatorUsername);
 
@@ -350,22 +538,31 @@ class _$WorkoutImpl implements _Workout {
   @pragma('vm:prefer-inline')
   _$$WorkoutImplCopyWith<_$WorkoutImpl> get copyWith =>
       __$$WorkoutImplCopyWithImpl<_$WorkoutImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$WorkoutImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Workout implements Workout {
   const factory _Workout(
       {required final String id,
       required final String name,
-      required final List<ExercisePointer> exercisePointers,
+      required final List<CyclePointer> cyclePointers,
       required final DateTime creationDate,
       required final String creatorUsername}) = _$WorkoutImpl;
+
+  factory _Workout.fromJson(Map<String, dynamic> json) = _$WorkoutImpl.fromJson;
 
   @override
   String get id;
   @override
   String get name;
   @override
-  List<ExercisePointer> get exercisePointers;
+  List<CyclePointer> get cyclePointers;
   @override
   DateTime get creationDate;
   @override

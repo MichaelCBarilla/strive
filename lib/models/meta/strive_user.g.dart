@@ -51,7 +51,7 @@ Map<String, dynamic> _$$StriveUserImplToJson(_$StriveUserImpl instance) =>
       'email': instance.email,
       'imageUrl': instance.imageUrl,
       'birthdate': const TimestampOrNullConverter().toJson(instance.birthdate),
-      'weights': instance.weights,
+      'weights': instance.weights?.map((e) => e.toJson()).toList(),
       'creationDate':
           const TimestampOrNullConverter().toJson(instance.creationDate),
       'savedExercises': instance.savedExercises,

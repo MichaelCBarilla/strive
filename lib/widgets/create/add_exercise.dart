@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-import 'package:strive/models/fitness/workout.dart';
-import 'package:strive/providers/fitness/exercises.dart';
+import 'package:strive/providers/fitness/public_exercises.dart';
 import 'package:strive/widgets/display/exercise_details.dart';
 import 'package:strive/widgets/display/list_display_vertical.dart';
 
@@ -10,13 +9,15 @@ class AddExercise extends ConsumerStatefulWidget {
   const AddExercise({
     super.key,
     required this.onAddExercise,
-    required this.currentWorkoutPosition,
-    required this.currentSupersetPosition,
+    required this.positionInWorkout,
+    required this.positionInCycle,
   });
 
-  final void Function(ExercisePointer exercise) onAddExercise;
-  final int currentWorkoutPosition;
-  final int currentSupersetPosition;
+  final void Function(
+          String exerciseId, int positionInWorkout, int positionInCycle)
+      onAddExercise;
+  final int positionInWorkout;
+  final int positionInCycle;
 
   @override
   ConsumerState<AddExercise> createState() => _AddExerciseState();
@@ -27,10 +28,7 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
 
   void _submitExercise(
       String exerciseId, int workoutPosition, int supersetPosition) {
-    widget.onAddExercise(ExercisePointer(
-      ids: [exerciseId],
-      workoutPosition: workoutPosition,
-    ));
+    widget.onAddExercise(exerciseId, workoutPosition, supersetPosition);
 
     Navigator.pop(context);
   }
@@ -43,7 +41,7 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
 
   @override
   Widget build(BuildContext context) {
-    final exercises = ref.watch(exercisesProvider);
+    final publicExercises = ref.watch(publicExercisesProvider);
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     return LayoutBuilder(builder: (ctx, constraints) {
       final height = constraints.maxHeight - 100;
@@ -66,8 +64,8 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                 child: SizedBox(
                     height: 20), // Spacer between TextField and Exercise List
               ), // Replace SizedBox with SliverSpacing
-              exercises.when(
-                data: (exercises) {
+              publicExercises.when(
+                data: (publicExercises) {
                   // Use the data in your UI
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
@@ -78,23 +76,23 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                               context,
                               MaterialPageRoute(builder: (ctx) {
                                 return ExerciseDetails(
-                                  exercise: exercises[index],
+                                  exercise: publicExercises[index],
                                 );
                               }),
                             );
                           },
-                          title: Text(exercises[index].name),
+                          title: Text(publicExercises[index].name),
                           trailing: IconButton(
                             icon: Icon(Icons.add),
                             onPressed: () => _submitExercise(
-                              exercises[index].id,
-                              widget.currentWorkoutPosition,
-                              widget.currentSupersetPosition,
+                              publicExercises[index].id,
+                              widget.positionInWorkout,
+                              widget.positionInCycle,
                             ),
                           ),
                         );
                       },
-                      childCount: exercises.length,
+                      childCount: publicExercises.length,
                     ),
                   );
                 },

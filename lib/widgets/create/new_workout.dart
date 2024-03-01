@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/fitness/workout.dart';
-import 'package:strive/providers/fitness/exercises.dart';
+import 'package:strive/providers/fitness/public_exercises.dart';
 import 'package:strive/widgets/create/add_exercise.dart';
 import 'package:strive/widgets/create/exercise_card.dart';
 import 'package:strive/widgets/display/list_display_horizontal.dart';
@@ -18,15 +18,15 @@ class NewWorkout extends ConsumerStatefulWidget {
 class _NewWorkoutState extends ConsumerState<NewWorkout> {
   final _form = GlobalKey<FormState>();
   String _enteredName = '';
-  List<ExercisePointer> addedExercises = [];
+  List<CyclePointer> addedCycles = [];
 
-  _openAddExerciseOverlay() {
+  _openAddExerciseOverlay(int positionInWorkout, int positionInCycle) {
     showModalBottomSheet(
       context: context,
       builder: (ctx) => AddExercise(
         onAddExercise: _addExercise,
-        currentWorkoutPosition: addedExercises.length + 1,
-        currentSupersetPosition: 1,
+        positionInWorkout: positionInWorkout,
+        positionInCycle: positionInCycle,
       ),
       isScrollControlled: true,
       constraints: const BoxConstraints(maxWidth: double.infinity),
@@ -34,10 +34,43 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
     );
   }
 
-  void _addExercise(ExercisePointer exercisePointer) {
-    setState(() {
-      addedExercises.add(exercisePointer);
-    });
+  void _addExercise(
+      String exerciseId, int positionInWorkout, int positionInCycle) {
+    /* adding exercise in an existing cycle */
+    if (positionInWorkout - 1 < addedCycles.length) {
+      setState(() {
+        final cycle = CyclePointer(
+          exercisePointers: [
+            ...addedCycles[positionInWorkout - 1].exercisePointers,
+            ExercisePointer(
+              id: exerciseId,
+              positionInCycle: positionInCycle,
+            ),
+          ],
+          positionInWorkout: positionInWorkout,
+        );
+        addedCycles.removeAt(positionInWorkout - 1);
+        addedCycles.add(cycle);
+        addedCycles
+            .sort((a, b) => a.positionInWorkout.compareTo(b.positionInWorkout));
+      });
+    }
+    /* adding exercise in a new cycle */
+    else {
+      setState(() {
+        addedCycles.add(
+          CyclePointer(
+            exercisePointers: [
+              ExercisePointer(
+                id: exerciseId,
+                positionInCycle: positionInCycle,
+              )
+            ],
+            positionInWorkout: positionInWorkout,
+          ),
+        );
+      });
+    }
   }
 
   void _submitWorkout() async {
@@ -57,11 +90,14 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
       if (userSnapshot.exists) {
         Map<String, dynamic> userData =
             userSnapshot.data() as Map<String, dynamic>;
+        print(
+            addedCycles.map((cyclePointer) => cyclePointer.toJson()).toList());
         await FirebaseFirestore.instance.collection('workouts').add({
           'name': _enteredName,
           'creatorsUsername': userData['username'],
           'creationDate': DateTime.now(),
-          'workoutExercises': addedExercises,
+          'cycles':
+              addedCycles.map((cyclePointer) => cyclePointer.toJson()).toList(),
         });
         print('Workout added to collection successfully');
       } else {
@@ -77,12 +113,30 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
 
   @override
   Widget build(BuildContext context) {
-    final exercises = ref.watch(exercisesProvider);
+    final publicExercises = ref.watch(publicExercisesProvider);
     return Form(
       key: _form,
       child: SingleChildScrollView(
         child: Column(
           children: [
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Text('Cancel'),
+                ),
+                ElevatedButton(
+                  onPressed: _submitWorkout,
+                  child: const Text('Create Workout'),
+                ),
+              ],
+            ),
             TextFormField(
               decoration: const InputDecoration(
                 label: Text('Workout Name'),
@@ -103,9 +157,10 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                const Text('Add Exercise'),
+                const Text('Add Cycle'),
                 IconButton(
-                  onPressed: _openAddExerciseOverlay,
+                  onPressed: () =>
+                      _openAddExerciseOverlay(addedCycles.length + 1, 1),
                   icon: const Icon(Icons.add),
                 ),
               ],
@@ -113,51 +168,55 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
             const SizedBox(
               height: 20,
             ),
-            if (addedExercises.isNotEmpty)
-              ListDisplayHorizontal(
-                containers: addedExercises.map((addedExercise) {
-                  return exercises.when(
-                    data: (data) {
-                      final foundExercise = data.firstWhere(
-                          (exercise) => addedExercise.ids[0] == exercise.id);
-                      return ExerciseCard(exercise: foundExercise);
-                    },
-                    error: (error, stack) => SliverToBoxAdapter(
-                      child: Text('Error: $error'),
-                    ),
-                    loading: () => const Center(
-                      child: CircularProgressIndicator(),
+            publicExercises.when(
+              data: (publicExercises) {
+                var cycles = addedCycles.map((addedCycle) {
+                  List<Widget> cycle =
+                      []; // add exercise cards for every exercise in the cycle
+                  for (var addedExercise in addedCycle.exercisePointers) {
+                    final foundExercise = publicExercises.firstWhere(
+                        (publicExcercise) =>
+                            publicExcercise.id == addedExercise.id);
+                    cycle.add(ExerciseCard(exercise: foundExercise));
+                  }
+                  return ListDisplayHorizontal(
+                    containers: [
+                      ...cycle,
+                      Center(
+                        child: IconButton(
+                          onPressed: () => _openAddExerciseOverlay(
+                              addedCycle.positionInWorkout,
+                              addedCycle.exercisePointers.length + 1),
+                          icon: const Icon(Icons.add),
+                        ),
+                      )
+                    ],
+                    containerHeight: 200,
+                    titleWidget: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Set ${addedCycle.positionInWorkout}',
+                          style: const TextStyle(fontSize: 20),
+                        ),
+                      ],
                     ),
                   );
-                }).toList(),
-                containerHeight: 150,
-                titleWidget: const Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Text(
-                      'Added Exercises',
-                      style: TextStyle(fontSize: 20),
-                    ),
-                  ],
-                ),
+                }).toList();
+                if (addedCycles.isNotEmpty) {
+                  return Column(
+                    children: cycles,
+                  );
+                }
+
+                return const Text('No Cycles Added');
+              },
+              error: (error, stack) => SliverToBoxAdapter(
+                child: Text('Error: $error'),
               ),
-            const SizedBox(
-              height: 20,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                TextButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: const Text('Cancel'),
-                ),
-                ElevatedButton(
-                  onPressed: _submitWorkout,
-                  child: const Text('Create Workout'),
-                ),
-              ],
+              loading: () => const Center(
+                child: CircularProgressIndicator(),
+              ),
             ),
           ],
         ),
