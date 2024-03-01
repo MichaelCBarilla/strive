@@ -6,7 +6,7 @@ part 'workout.freezed.dart';
 class ExercisePointer with _$ExercisePointer {
   const factory ExercisePointer({
     required List<String> ids,
-    required String position,
+    required int workoutPosition,
   }) = _ExercisePointer;
 }
 

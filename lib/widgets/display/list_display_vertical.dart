@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ListDisplayButton extends StatelessWidget {
+class ListDisplayVertical extends StatelessWidget {
   final VoidCallback? onPressed;
   final Widget title;
   final Widget? leading;
   final Widget? trailing;
 
-  const ListDisplayButton({
+  const ListDisplayVertical({
     Key? key,
     required this.onPressed,
     required this.title,

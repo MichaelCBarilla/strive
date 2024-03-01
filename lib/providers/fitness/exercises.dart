@@ -10,6 +10,7 @@ part 'exercises.g.dart';
 class Exercises extends _$Exercises {
   @override
   Stream<List<Exercise>> build() async* {
+    ref.keepAlive();
     final collectionReference =
         FirebaseFirestore.instance.collection('exercises');
     final snapshots = collectionReference.snapshots();

@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ExercisePointer {
   List<String> get ids => throw _privateConstructorUsedError;
-  String get position => throw _privateConstructorUsedError;
+  int get workoutPosition => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $ExercisePointerCopyWith<ExercisePointer> get copyWith =>
@@ -30,7 +30,7 @@ abstract class $ExercisePointerCopyWith<$Res> {
           ExercisePointer value, $Res Function(ExercisePointer) then) =
       _$ExercisePointerCopyWithImpl<$Res, ExercisePointer>;
   @useResult
-  $Res call({List<String> ids, String position});
+  $Res call({List<String> ids, int workoutPosition});
 }
 
 /// @nodoc
@@ -47,17 +47,17 @@ class _$ExercisePointerCopyWithImpl<$Res, $Val extends ExercisePointer>
   @override
   $Res call({
     Object? ids = null,
-    Object? position = null,
+    Object? workoutPosition = null,
   }) {
     return _then(_value.copyWith(
       ids: null == ids
           ? _value.ids
           : ids // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as String,
+      workoutPosition: null == workoutPosition
+          ? _value.workoutPosition
+          : workoutPosition // ignore: cast_nullable_to_non_nullable
+              as int,
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$ExercisePointerImplCopyWith<$Res>
       __$$ExercisePointerImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> ids, String position});
+  $Res call({List<String> ids, int workoutPosition});
 }
 
 /// @nodoc
@@ -85,17 +85,17 @@ class __$$ExercisePointerImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? ids = null,
-    Object? position = null,
+    Object? workoutPosition = null,
   }) {
     return _then(_$ExercisePointerImpl(
       ids: null == ids
           ? _value._ids
           : ids // ignore: cast_nullable_to_non_nullable
               as List<String>,
-      position: null == position
-          ? _value.position
-          : position // ignore: cast_nullable_to_non_nullable
-              as String,
+      workoutPosition: null == workoutPosition
+          ? _value.workoutPosition
+          : workoutPosition // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -104,7 +104,7 @@ class __$$ExercisePointerImplCopyWithImpl<$Res>
 
 class _$ExercisePointerImpl implements _ExercisePointer {
   const _$ExercisePointerImpl(
-      {required final List<String> ids, required this.position})
+      {required final List<String> ids, required this.workoutPosition})
       : _ids = ids;
 
   final List<String> _ids;
@@ -116,11 +116,11 @@ class _$ExercisePointerImpl implements _ExercisePointer {
   }
 
   @override
-  final String position;
+  final int workoutPosition;
 
   @override
   String toString() {
-    return 'ExercisePointer(ids: $ids, position: $position)';
+    return 'ExercisePointer(ids: $ids, workoutPosition: $workoutPosition)';
   }
 
   @override
@@ -129,13 +129,13 @@ class _$ExercisePointerImpl implements _ExercisePointer {
         (other.runtimeType == runtimeType &&
             other is _$ExercisePointerImpl &&
             const DeepCollectionEquality().equals(other._ids, _ids) &&
-            (identical(other.position, position) ||
-                other.position == position));
+            (identical(other.workoutPosition, workoutPosition) ||
+                other.workoutPosition == workoutPosition));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_ids), position);
+      runtimeType, const DeepCollectionEquality().hash(_ids), workoutPosition);
 
   @JsonKey(ignore: true)
   @override
@@ -148,12 +148,12 @@ class _$ExercisePointerImpl implements _ExercisePointer {
 abstract class _ExercisePointer implements ExercisePointer {
   const factory _ExercisePointer(
       {required final List<String> ids,
-      required final String position}) = _$ExercisePointerImpl;
+      required final int workoutPosition}) = _$ExercisePointerImpl;
 
   @override
   List<String> get ids;
   @override
-  String get position;
+  int get workoutPosition;
   @override
   @JsonKey(ignore: true)
   _$$ExercisePointerImplCopyWith<_$ExercisePointerImpl> get copyWith =>

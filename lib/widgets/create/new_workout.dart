@@ -1,17 +1,21 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/fitness/workout.dart';
+import 'package:strive/providers/fitness/exercises.dart';
 import 'package:strive/widgets/create/add_exercise.dart';
+import 'package:strive/widgets/create/exercise_card.dart';
+import 'package:strive/widgets/display/list_display_horizontal.dart';
 
-class NewWorkout extends StatefulWidget {
+class NewWorkout extends ConsumerStatefulWidget {
   const NewWorkout({super.key});
 
   @override
-  State<NewWorkout> createState() => _NewWorkoutState();
+  ConsumerState<NewWorkout> createState() => _NewWorkoutState();
 }
 
-class _NewWorkoutState extends State<NewWorkout> {
+class _NewWorkoutState extends ConsumerState<NewWorkout> {
   final _form = GlobalKey<FormState>();
   String _enteredName = '';
   List<ExercisePointer> addedExercises = [];
@@ -19,7 +23,11 @@ class _NewWorkoutState extends State<NewWorkout> {
   _openAddExerciseOverlay() {
     showModalBottomSheet(
       context: context,
-      builder: (ctx) => AddExercise(onAddExercise: _addExercise),
+      builder: (ctx) => AddExercise(
+        onAddExercise: _addExercise,
+        currentWorkoutPosition: addedExercises.length + 1,
+        currentSupersetPosition: 1,
+      ),
       isScrollControlled: true,
       constraints: const BoxConstraints(maxWidth: double.infinity),
       useSafeArea: true,
@@ -69,6 +77,7 @@ class _NewWorkoutState extends State<NewWorkout> {
 
   @override
   Widget build(BuildContext context) {
+    final exercises = ref.watch(exercisesProvider);
     return Form(
       key: _form,
       child: SingleChildScrollView(
@@ -101,6 +110,37 @@ class _NewWorkoutState extends State<NewWorkout> {
                 ),
               ],
             ),
+            const SizedBox(
+              height: 20,
+            ),
+            if (addedExercises.isNotEmpty)
+              ListDisplayHorizontal(
+                containers: addedExercises.map((addedExercise) {
+                  return exercises.when(
+                    data: (data) {
+                      final foundExercise = data.firstWhere(
+                          (exercise) => addedExercise.ids[0] == exercise.id);
+                      return ExerciseCard(exercise: foundExercise);
+                    },
+                    error: (error, stack) => SliverToBoxAdapter(
+                      child: Text('Error: $error'),
+                    ),
+                    loading: () => const Center(
+                      child: CircularProgressIndicator(),
+                    ),
+                  );
+                }).toList(),
+                containerHeight: 150,
+                titleWidget: const Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Added Exercises',
+                      style: TextStyle(fontSize: 20),
+                    ),
+                  ],
+                ),
+              ),
             const SizedBox(
               height: 20,
             ),

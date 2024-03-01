@@ -4,15 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/fitness/workout.dart';
 import 'package:strive/providers/fitness/exercises.dart';
 import 'package:strive/widgets/display/exercise_details.dart';
-import 'package:strive/widgets/display/list_display_button.dart';
+import 'package:strive/widgets/display/list_display_vertical.dart';
 
 class AddExercise extends ConsumerStatefulWidget {
   const AddExercise({
     super.key,
     required this.onAddExercise,
+    required this.currentWorkoutPosition,
+    required this.currentSupersetPosition,
   });
 
   final void Function(ExercisePointer exercise) onAddExercise;
+  final int currentWorkoutPosition;
+  final int currentSupersetPosition;
 
   @override
   ConsumerState<AddExercise> createState() => _AddExerciseState();
@@ -21,11 +25,12 @@ class AddExercise extends ConsumerStatefulWidget {
 class _AddExerciseState extends ConsumerState<AddExercise> {
   final _searchTextController = TextEditingController();
 
-  void _submitExercise() {
-    // widget.onAddExercise(ExercisePointer(
-    //   id: ,
-    //   position ,
-    // ));
+  void _submitExercise(
+      String exerciseId, int workoutPosition, int supersetPosition) {
+    widget.onAddExercise(ExercisePointer(
+      ids: [exerciseId],
+      workoutPosition: workoutPosition,
+    ));
 
     Navigator.pop(context);
   }
@@ -67,7 +72,7 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
-                        return ListDisplayButton(
+                        return ListDisplayVertical(
                           onPressed: () {
                             Navigator.push(
                               context,
@@ -81,7 +86,11 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                           title: Text(exercises[index].name),
                           trailing: IconButton(
                             icon: Icon(Icons.add),
-                            onPressed: () => print('add exercise'),
+                            onPressed: () => _submitExercise(
+                              exercises[index].id,
+                              widget.currentWorkoutPosition,
+                              widget.currentSupersetPosition,
+                            ),
                           ),
                         );
                       },
