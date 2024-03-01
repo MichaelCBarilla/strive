@@ -351,7 +351,7 @@ mixin _$Workout {
   String get name => throw _privateConstructorUsedError;
   List<CyclePointer> get cyclePointers => throw _privateConstructorUsedError;
   DateTime get creationDate => throw _privateConstructorUsedError;
-  String get creatorUsername => throw _privateConstructorUsedError;
+  String get creatorsUsername => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -368,7 +368,7 @@ abstract class $WorkoutCopyWith<$Res> {
       String name,
       List<CyclePointer> cyclePointers,
       DateTime creationDate,
-      String creatorUsername});
+      String creatorsUsername});
 }
 
 /// @nodoc
@@ -388,7 +388,7 @@ class _$WorkoutCopyWithImpl<$Res, $Val extends Workout>
     Object? name = null,
     Object? cyclePointers = null,
     Object? creationDate = null,
-    Object? creatorUsername = null,
+    Object? creatorsUsername = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -407,9 +407,9 @@ class _$WorkoutCopyWithImpl<$Res, $Val extends Workout>
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      creatorUsername: null == creatorUsername
-          ? _value.creatorUsername
-          : creatorUsername // ignore: cast_nullable_to_non_nullable
+      creatorsUsername: null == creatorsUsername
+          ? _value.creatorsUsername
+          : creatorsUsername // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -427,7 +427,7 @@ abstract class _$$WorkoutImplCopyWith<$Res> implements $WorkoutCopyWith<$Res> {
       String name,
       List<CyclePointer> cyclePointers,
       DateTime creationDate,
-      String creatorUsername});
+      String creatorsUsername});
 }
 
 /// @nodoc
@@ -445,7 +445,7 @@ class __$$WorkoutImplCopyWithImpl<$Res>
     Object? name = null,
     Object? cyclePointers = null,
     Object? creationDate = null,
-    Object? creatorUsername = null,
+    Object? creatorsUsername = null,
   }) {
     return _then(_$WorkoutImpl(
       id: null == id
@@ -464,9 +464,9 @@ class __$$WorkoutImplCopyWithImpl<$Res>
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      creatorUsername: null == creatorUsername
-          ? _value.creatorUsername
-          : creatorUsername // ignore: cast_nullable_to_non_nullable
+      creatorsUsername: null == creatorsUsername
+          ? _value.creatorsUsername
+          : creatorsUsername // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -480,7 +480,7 @@ class _$WorkoutImpl implements _Workout {
       required this.name,
       required final List<CyclePointer> cyclePointers,
       required this.creationDate,
-      required this.creatorUsername})
+      required this.creatorsUsername})
       : _cyclePointers = cyclePointers;
 
   factory _$WorkoutImpl.fromJson(Map<String, dynamic> json) =>
@@ -501,11 +501,11 @@ class _$WorkoutImpl implements _Workout {
   @override
   final DateTime creationDate;
   @override
-  final String creatorUsername;
+  final String creatorsUsername;
 
   @override
   String toString() {
-    return 'Workout(id: $id, name: $name, cyclePointers: $cyclePointers, creationDate: $creationDate, creatorUsername: $creatorUsername)';
+    return 'Workout(id: $id, name: $name, cyclePointers: $cyclePointers, creationDate: $creationDate, creatorsUsername: $creatorsUsername)';
   }
 
   @override
@@ -519,8 +519,8 @@ class _$WorkoutImpl implements _Workout {
                 .equals(other._cyclePointers, _cyclePointers) &&
             (identical(other.creationDate, creationDate) ||
                 other.creationDate == creationDate) &&
-            (identical(other.creatorUsername, creatorUsername) ||
-                other.creatorUsername == creatorUsername));
+            (identical(other.creatorsUsername, creatorsUsername) ||
+                other.creatorsUsername == creatorsUsername));
   }
 
   @JsonKey(ignore: true)
@@ -531,7 +531,7 @@ class _$WorkoutImpl implements _Workout {
       name,
       const DeepCollectionEquality().hash(_cyclePointers),
       creationDate,
-      creatorUsername);
+      creatorsUsername);
 
   @JsonKey(ignore: true)
   @override
@@ -553,7 +553,7 @@ abstract class _Workout implements Workout {
       required final String name,
       required final List<CyclePointer> cyclePointers,
       required final DateTime creationDate,
-      required final String creatorUsername}) = _$WorkoutImpl;
+      required final String creatorsUsername}) = _$WorkoutImpl;
 
   factory _Workout.fromJson(Map<String, dynamic> json) = _$WorkoutImpl.fromJson;
 
@@ -566,7 +566,7 @@ abstract class _Workout implements Workout {
   @override
   DateTime get creationDate;
   @override
-  String get creatorUsername;
+  String get creatorsUsername;
   @override
   @JsonKey(ignore: true)
   _$$WorkoutImplCopyWith<_$WorkoutImpl> get copyWith =>

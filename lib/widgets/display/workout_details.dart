@@ -1,22 +1,24 @@
 import 'package:flutter/material.dart';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
-import 'package:strive/models/fitness/exercise.dart';
+
+import 'package:strive/models/fitness/workout.dart';
 import 'package:strive/providers/meta/strive_user.dart';
 
-class ExerciseDetails extends ConsumerStatefulWidget {
-  final Exercise exercise;
+class WorkoutDetails extends ConsumerStatefulWidget {
+  final Workout workout;
 
-  const ExerciseDetails({
+  const WorkoutDetails({
     Key? key,
-    required this.exercise,
+    required this.workout,
   }) : super(key: key);
 
   @override
-  ConsumerState<ExerciseDetails> createState() => _ExerciseDetailsState();
+  ConsumerState<WorkoutDetails> createState() => _WorkoutDetailsState();
 }
 
-class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
+class _WorkoutDetailsState extends ConsumerState<WorkoutDetails> {
   bool _isSaved = false;
   @override
   void initState() {
@@ -24,7 +26,7 @@ class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
     setState(() {
       _isSaved = ref
           .read(striveUserNotifierProvider.notifier)
-          .checkIsExerciseSaved(widget.exercise.id);
+          .checkIsWorkoutSaved(widget.workout.id);
     });
   }
 
@@ -33,7 +35,7 @@ class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          widget.exercise.name,
+          widget.workout.name,
           style: const TextStyle(fontSize: 16),
         ),
         actions: [
@@ -42,7 +44,7 @@ class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
               if (_isSaved) {
                 final wasRemoved = await ref
                     .read(striveUserNotifierProvider.notifier)
-                    .removeExercise(widget.exercise.id);
+                    .removeWorkout(widget.workout.id);
                 setState(() {
                   _isSaved = !wasRemoved;
                 });
@@ -51,15 +53,15 @@ class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(wasRemoved
-                          ? 'Exercise removed.'
-                          : 'Exercise could not be removed.'),
+                          ? 'Workout removed.'
+                          : 'Workout could not be removed.'),
                     ),
                   );
                 }
               } else {
                 final wasSaved = await ref
                     .read(striveUserNotifierProvider.notifier)
-                    .saveExercise(widget.exercise.id);
+                    .saveWorkout(widget.workout.id);
                 setState(() {
                   _isSaved = wasSaved;
                 });
@@ -68,8 +70,8 @@ class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(wasSaved
-                          ? 'Exercise saved.'
-                          : 'Exercise could not be saved.'),
+                          ? 'Workout saved.'
+                          : 'Workout could not be saved.'),
                     ),
                   );
                 }
@@ -95,7 +97,7 @@ class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
         child: Column(
           children: [
             Hero(
-              tag: widget.exercise.id,
+              tag: widget.workout.id,
               child: Image.asset(
                 'assets/images/dumbbell.jpg',
                 height: 300,
@@ -107,19 +109,10 @@ class _ExerciseDetailsState extends ConsumerState<ExerciseDetails> {
               height: 14,
             ),
             Text(
-              'created by ${widget.exercise.creatorsUsername}, on ${DateFormat.yMd().format(widget.exercise.creationDate)}',
+              'created by ${widget.workout.creatorsUsername}, on ${DateFormat.yMd().format(widget.workout.creationDate)}',
             ),
             const SizedBox(
               height: 14,
-            ),
-            Text(
-              'Recommended Sets: ${widget.exercise.recommendedSetsMin} - ${widget.exercise.recommendedSetsMax}',
-            ),
-            const SizedBox(
-              height: 14,
-            ),
-            Text(
-              'Recommended Reps: ${widget.exercise.recommendedRepsMin} - ${widget.exercise.recommendedRepsMax}',
             ),
           ],
         ),

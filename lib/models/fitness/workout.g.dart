@@ -43,7 +43,7 @@ _$WorkoutImpl _$$WorkoutImplFromJson(Map<String, dynamic> json) =>
           .map((e) => CyclePointer.fromJson(e as Map<String, dynamic>))
           .toList(),
       creationDate: DateTime.parse(json['creationDate'] as String),
-      creatorUsername: json['creatorUsername'] as String,
+      creatorsUsername: json['creatorsUsername'] as String,
     );
 
 Map<String, dynamic> _$$WorkoutImplToJson(_$WorkoutImpl instance) =>
@@ -52,5 +52,5 @@ Map<String, dynamic> _$$WorkoutImplToJson(_$WorkoutImpl instance) =>
       'name': instance.name,
       'cyclePointers': instance.cyclePointers.map((e) => e.toJson()).toList(),
       'creationDate': instance.creationDate.toIso8601String(),
-      'creatorUsername': instance.creatorUsername,
+      'creatorsUsername': instance.creatorsUsername,
     };

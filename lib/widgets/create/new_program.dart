@@ -1,30 +1,87 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:strive/models/fitness/program.dart';
+import 'package:strive/providers/fitness/public_workouts.dart';
+import 'package:strive/widgets/create/add_workout.dart';
+import 'package:strive/widgets/create/workout_card.dart';
+import 'package:strive/widgets/display/list_display_horizontal.dart';
 
-class NewProgram extends StatefulWidget {
+class NewProgram extends ConsumerStatefulWidget {
   const NewProgram({super.key});
 
   @override
-  State<NewProgram> createState() => _NewProgramState();
+  ConsumerState<NewProgram> createState() => _NewProgramState();
 }
 
-class _NewProgramState extends State<NewProgram> {
+class _NewProgramState extends ConsumerState<NewProgram> {
   final _form = GlobalKey<FormState>();
   String _enteredName = '';
+  List<WorkoutPointer> addedWorkouts = [];
 
-  void _submitProgram() {
+  void _openAddWorkoutOverlay() {
+    showModalBottomSheet(
+      context: context,
+      builder: (ctx) => AddWorkout(
+        onAddWorkout: _addWorkout,
+      ),
+      isScrollControlled: true,
+      constraints: const BoxConstraints(maxWidth: double.infinity),
+      useSafeArea: true,
+    );
+  }
+
+  void _addWorkout(String workoutId) {
+    setState(() {
+      addedWorkouts.add(
+        WorkoutPointer(
+            workoutId: workoutId, positionInProgram: addedWorkouts.length + 1),
+      );
+    });
+  }
+
+  void _submitProgram() async {
     final isValid = _form.currentState!.validate();
 
     if (!isValid) {
       return;
     }
 
-    /* Add to Firebase */
+    _form.currentState!.save();
 
-    Navigator.pop(context);
+    try {
+      DocumentSnapshot userSnapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(FirebaseAuth.instance.currentUser?.uid)
+          .get();
+      if (userSnapshot.exists) {
+        Map<String, dynamic> userData =
+            userSnapshot.data() as Map<String, dynamic>;
+
+        await FirebaseFirestore.instance.collection('programs').add({
+          'name': _enteredName,
+          'creatorsUsername': userData['username'],
+          'creationDate': DateTime.now(),
+          'workoutPointers': addedWorkouts
+              .map((workoutPointer) => workoutPointer.toJson())
+              .toList(),
+        });
+        print('Program added to collection successfully');
+      } else {
+        print('Can\'t find user');
+      }
+    } catch (e) {
+      print('Error adding Program to collection: $e');
+    }
+    if (context.mounted) {
+      Navigator.pop(context);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
+    final publicWorkouts = ref.watch(publicWorkoutsProvider);
     return Form(
       key: _form,
       child: Column(
@@ -59,6 +116,53 @@ class _NewProgramState extends State<NewProgram> {
                 child: const Text('Create Program'),
               ),
             ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              const Text('Add Workout'),
+              IconButton(
+                onPressed: _openAddWorkoutOverlay,
+                icon: const Icon(Icons.add),
+              ),
+            ],
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          publicWorkouts.when(
+            data: (publicWorkouts) {
+              var workouts = addedWorkouts.map((addedWorkout) {
+                return publicWorkouts.firstWhere((publicWorkout) =>
+                    publicWorkout.id == addedWorkout.workoutId);
+              }).toList();
+              if (workouts.isNotEmpty) {
+                return ListDisplayHorizontal(
+                  containers: [
+                    ...workouts.map((workout) => WorkoutCard(workout: workout))
+                  ],
+                  containerHeight: 200,
+                  titleWidget: const Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Workouts',
+                        style: TextStyle(fontSize: 20),
+                      ),
+                    ],
+                  ),
+                );
+              }
+
+              return const Text('No Workouts Added');
+            },
+            error: (error, stack) => Text('Error: $error'),
+            loading: () => const Center(
+              child: CircularProgressIndicator(),
+            ),
           ),
         ],
       ),

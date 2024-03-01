@@ -20,6 +20,7 @@ class StriveUserNotifier extends _$StriveUserNotifier {
       weights: null,
       creationDate: null,
       savedExercises: [],
+      savedWorkouts: [],
     );
   }
 
@@ -33,6 +34,7 @@ class StriveUserNotifier extends _$StriveUserNotifier {
       weights: newStriveUser.weights,
       creationDate: newStriveUser.creationDate,
       savedExercises: newStriveUser.savedExercises,
+      savedWorkouts: newStriveUser.savedWorkouts,
     );
   }
 
@@ -46,10 +48,11 @@ class StriveUserNotifier extends _$StriveUserNotifier {
       weights: null,
       creationDate: null,
       savedExercises: [],
+      savedWorkouts: [],
     );
   }
 
-  bool checkIsSaved(String exerciseId) {
+  bool checkIsExerciseSaved(String exerciseId) {
     for (var savedExerciseId in state.savedExercises) {
       if (exerciseId == savedExerciseId) {
         return true;
@@ -96,6 +99,57 @@ class StriveUserNotifier extends _$StriveUserNotifier {
           'exercise removed from the user\'s list of savedExercises successfully!');
     } catch (e) {
       print('Error removing exercise from the list of savedExercises: $e');
+      return false;
+    }
+    return true;
+  }
+
+  bool checkIsWorkoutSaved(String workoutId) {
+    for (var savedWorkoutId in state.savedWorkouts) {
+      if (workoutId == savedWorkoutId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future<bool> saveWorkout(String savedWorkoutId) async {
+    final newSavedWorkouts = [...state.savedWorkouts, savedWorkoutId];
+    state = state.copyWith(savedWorkouts: newSavedWorkouts);
+
+    print(state.id);
+
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(state.id);
+
+    try {
+      await documentReference.update({
+        'savedWorkouts': FieldValue.arrayUnion([savedWorkoutId]),
+      });
+      print('workout added to the user\'s list of savedWorkouts successfully!');
+    } catch (e) {
+      print('Error adding workout to the list of savedWorkouts: $e');
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> removeWorkout(String removedWorkoutId) async {
+    final newSavedWorkouts = [...state.savedWorkouts];
+    newSavedWorkouts.remove(removedWorkoutId);
+    state = state.copyWith(savedWorkouts: newSavedWorkouts);
+
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(state.id);
+
+    try {
+      await documentReference.update({
+        'savedWorkouts': FieldValue.arrayRemove([removedWorkoutId]),
+      });
+      print(
+          'workout removed from the user\'s list of savedWorkouts successfully!');
+    } catch (e) {
+      print('Error removing workout from the list of savedWorkouts: $e');
       return false;
     }
     return true;

@@ -20,7 +20,7 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
   String _enteredName = '';
   List<CyclePointer> addedCycles = [];
 
-  _openAddExerciseOverlay(int positionInWorkout, int positionInCycle) {
+  void _openAddExerciseOverlay(int positionInWorkout, int positionInCycle) {
     showModalBottomSheet(
       context: context,
       builder: (ctx) => AddExercise(
@@ -90,8 +90,7 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
       if (userSnapshot.exists) {
         Map<String, dynamic> userData =
             userSnapshot.data() as Map<String, dynamic>;
-        print(
-            addedCycles.map((cyclePointer) => cyclePointer.toJson()).toList());
+
         await FirebaseFirestore.instance.collection('workouts').add({
           'name': _enteredName,
           'creatorsUsername': userData['username'],

@@ -31,6 +31,7 @@ class StriveUser with _$StriveUser {
     required List<Weight>? weights,
     @TimestampOrNullConverter() required DateTime? creationDate,
     required List<String> savedExercises,
+    required List<String> savedWorkouts,
   }) = _StriveUser;
 
   factory StriveUser.fromJson(Map<String, dynamic> json) =>

@@ -42,6 +42,9 @@ _$StriveUserImpl _$$StriveUserImplFromJson(Map<String, dynamic> json) =>
       savedExercises: (json['savedExercises'] as List<dynamic>)
           .map((e) => e as String)
           .toList(),
+      savedWorkouts: (json['savedWorkouts'] as List<dynamic>)
+          .map((e) => e as String)
+          .toList(),
     );
 
 Map<String, dynamic> _$$StriveUserImplToJson(_$StriveUserImpl instance) =>
@@ -55,4 +58,5 @@ Map<String, dynamic> _$$StriveUserImplToJson(_$StriveUserImpl instance) =>
       'creationDate':
           const TimestampOrNullConverter().toJson(instance.creationDate),
       'savedExercises': instance.savedExercises,
+      'savedWorkouts': instance.savedWorkouts,
     };

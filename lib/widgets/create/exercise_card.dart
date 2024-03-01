@@ -3,7 +3,7 @@ import 'package:strive/models/fitness/exercise.dart';
 
 class ExerciseCard extends StatelessWidget {
   const ExerciseCard({
-    Key? key,
+    super.key,
     required this.exercise,
   });
 

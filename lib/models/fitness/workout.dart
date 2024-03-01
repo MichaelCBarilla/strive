@@ -32,7 +32,7 @@ class Workout with _$Workout {
     required String name,
     required List<CyclePointer> cyclePointers,
     required DateTime creationDate,
-    required String creatorUsername,
+    required String creatorsUsername,
   }) = _Workout;
 
   factory Workout.fromJson(Map<String, dynamic> json) =>
