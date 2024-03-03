@@ -51,42 +51,6 @@ class _ProgramsScreenState extends State<ProgramsScreen> {
               ),
             ],
           ),
-          ListDisplayHorizontal(
-            titleWidget: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Text(
-                  'Program Title',
-                  style: TextStyle(fontSize: 20),
-                ),
-                IconButton(
-                  onPressed: () {},
-                  icon: const Icon(Icons.settings),
-                ),
-              ],
-            ),
-            containerHeight: 200,
-            containers: [
-              Container(
-                height: 175,
-                width: 250,
-                color: Colors.amber,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-              ),
-              Container(
-                height: 175,
-                width: 250,
-                color: Colors.amber,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-              ),
-              Container(
-                height: 175,
-                width: 250,
-                color: Colors.amber,
-                margin: const EdgeInsets.symmetric(horizontal: 20),
-              ),
-            ],
-          ),
         ],
       ),
     );
