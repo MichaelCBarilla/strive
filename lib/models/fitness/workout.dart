@@ -1,24 +1,23 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:strive/models/fitness/exercise.dart';
 
 part 'workout.freezed.dart';
 part 'workout.g.dart';
 
-@freezed
-class ExercisePointer with _$ExercisePointer {
-  const factory ExercisePointer({
-    required String id,
-    required int positionInCycle,
-  }) = _ExercisePointer;
+@unfreezed
+class CyclePointers with _$CyclePointers {
+  factory CyclePointers({
+    required Map<int, CyclePointer> cyclePointers,
+  }) = _CyclePointers;
 
-  factory ExercisePointer.fromJson(Map<String, dynamic> json) =>
-      _$ExercisePointerFromJson(json);
+  factory CyclePointers.fromJson(Map<String, dynamic> json) =>
+      _$CyclePointersFromJson(json);
 }
 
-@freezed
+@unfreezed
 class CyclePointer with _$CyclePointer {
-  const factory CyclePointer({
-    required List<ExercisePointer> exercisePointers,
-    required int positionInWorkout,
+  factory CyclePointer({
+    required Map<int, String> exerciseIds,
   }) = _CyclePointer;
 
   factory CyclePointer.fromJson(Map<String, dynamic> json) =>
@@ -26,11 +25,20 @@ class CyclePointer with _$CyclePointer {
 }
 
 @freezed
+class Cycle with _$Cycle {
+  const factory Cycle({
+    required Map<int, Exercise> exercises,
+  }) = _Cycle;
+
+  factory Cycle.fromJson(Map<String, dynamic> json) => _$CycleFromJson(json);
+}
+
+@freezed
 class Workout with _$Workout {
   const factory Workout({
     required String id,
     required String name,
-    required List<CyclePointer> cyclePointers,
+    required Map<int, Cycle> cycles,
     required DateTime creationDate,
     required String creatorsUsername,
   }) = _Workout;

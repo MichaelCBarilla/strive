@@ -1,6 +1,7 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'exercise.freezed.dart';
+part 'exercise.g.dart';
 
 enum RepType {
   count,
@@ -20,4 +21,7 @@ class Exercise with _$Exercise {
     required int recommendedRepsMin,
     required RepType repType,
   }) = _Exercise;
+
+  factory Exercise.fromJson(Map<String, dynamic> json) =>
+      _$ExerciseFromJson(json);
 }

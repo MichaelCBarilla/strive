@@ -43,7 +43,6 @@ class _NewExerciseState extends State<NewExercise> {
 
     int repsMin = int.parse(_enteredRecommendedRepsMin);
     int repsMax = int.parse(_enteredRecommendedRepsMax);
-    print(repsMin);
     if (repsMin > repsMax) {
       ScaffoldMessenger.of(context).clearSnackBars();
       ScaffoldMessenger.of(context).showSnackBar(

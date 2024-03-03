@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/fitness/program.dart';
 import 'package:strive/providers/fitness/public_workouts.dart';
 import 'package:strive/widgets/create/add_workout.dart';
-import 'package:strive/widgets/create/workout_card.dart';
+import 'package:strive/widgets/display/workout_card.dart';
 import 'package:strive/widgets/display/list_display_horizontal.dart';
 
 class NewProgram extends ConsumerStatefulWidget {
@@ -18,7 +18,7 @@ class NewProgram extends ConsumerStatefulWidget {
 class _NewProgramState extends ConsumerState<NewProgram> {
   final _form = GlobalKey<FormState>();
   String _enteredName = '';
-  List<WorkoutPointer> addedWorkouts = [];
+  WorkoutPointers addedWorkouts = WorkoutPointers(workoutIds: {});
 
   void _openAddWorkoutOverlay() {
     showModalBottomSheet(
@@ -34,10 +34,7 @@ class _NewProgramState extends ConsumerState<NewProgram> {
 
   void _addWorkout(String workoutId) {
     setState(() {
-      addedWorkouts.add(
-        WorkoutPointer(
-            workoutId: workoutId, positionInProgram: addedWorkouts.length + 1),
-      );
+      addedWorkouts.workoutIds[addedWorkouts.workoutIds.length + 1] = workoutId;
     });
   }
 
@@ -63,9 +60,7 @@ class _NewProgramState extends ConsumerState<NewProgram> {
           'name': _enteredName,
           'creatorsUsername': userData['username'],
           'creationDate': DateTime.now(),
-          'workoutPointers': addedWorkouts
-              .map((workoutPointer) => workoutPointer.toJson())
-              .toList(),
+          ...addedWorkouts.toJson(),
         });
         print('Program added to collection successfully');
       } else {
@@ -135,15 +130,21 @@ class _NewProgramState extends ConsumerState<NewProgram> {
           ),
           publicWorkouts.when(
             data: (publicWorkouts) {
-              var workouts = addedWorkouts.map((addedWorkout) {
-                return publicWorkouts.firstWhere((publicWorkout) =>
-                    publicWorkout.id == addedWorkout.workoutId);
-              }).toList();
+              List<Widget?> workouts =
+                  List<Widget?>.filled(addedWorkouts.workoutIds.length, null);
+
+              addedWorkouts.workoutIds.forEach((positionInProgram, workoutId) {
+                var foundWorkout = publicWorkouts[workoutId];
+                if (foundWorkout != null) {
+                  workouts[positionInProgram - 1] =
+                      WorkoutCard(workout: foundWorkout);
+                } else {
+                  print('could not find workout');
+                }
+              });
               if (workouts.isNotEmpty) {
                 return ListDisplayHorizontal(
-                  containers: [
-                    ...workouts.map((workout) => WorkoutCard(workout: workout))
-                  ],
+                  containers: workouts,
                   containerHeight: 200,
                   titleWidget: const Row(
                     mainAxisAlignment: MainAxisAlignment.start,

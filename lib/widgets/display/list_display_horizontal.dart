@@ -8,7 +8,7 @@ class ListDisplayHorizontal extends StatelessWidget {
     required this.titleWidget,
   });
 
-  final List<Widget> containers;
+  final List<Widget?> containers;
   final double containerHeight;
   final Widget titleWidget;
 
@@ -30,7 +30,10 @@ class ListDisplayHorizontal extends StatelessWidget {
               itemCount: containers.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: ((context, index) {
-                return containers[index];
+                if (containers[index] != null) {
+                  return containers[index];
+                }
+                return null;
               }),
             ),
           ),

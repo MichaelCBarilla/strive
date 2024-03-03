@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:strive/models/fitness/exercise.dart';
 
 import 'package:strive/providers/fitness/public_exercises.dart';
 import 'package:strive/widgets/display/exercise_details.dart';
@@ -65,8 +66,9 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                     height: 20), // Spacer between TextField and Exercise List
               ), // Replace SizedBox with SliverSpacing
               publicExercises.when(
-                data: (publicExercises) {
+                data: (publicExercisesMap) {
                   // Use the data in your UI
+                  var publicExercises = publicExercisesMap.values.toList();
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
@@ -83,7 +85,7 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                           },
                           title: Text(publicExercises[index].name),
                           trailing: IconButton(
-                            icon: Icon(Icons.add),
+                            icon: const Icon(Icons.add),
                             onPressed: () => _submitExercise(
                               publicExercises[index].id,
                               widget.positionInWorkout,

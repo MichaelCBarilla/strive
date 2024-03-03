@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/fitness/workout.dart';
 import 'package:strive/providers/fitness/public_exercises.dart';
 import 'package:strive/widgets/create/add_exercise.dart';
-import 'package:strive/widgets/create/exercise_card.dart';
+import 'package:strive/widgets/display/exercise_card.dart';
 import 'package:strive/widgets/display/list_display_horizontal.dart';
 
 class NewWorkout extends ConsumerStatefulWidget {
@@ -18,7 +18,7 @@ class NewWorkout extends ConsumerStatefulWidget {
 class _NewWorkoutState extends ConsumerState<NewWorkout> {
   final _form = GlobalKey<FormState>();
   String _enteredName = '';
-  List<CyclePointer> addedCycles = [];
+  CyclePointers addedCycles = CyclePointers(cyclePointers: {});
 
   void _openAddExerciseOverlay(int positionInWorkout, int positionInCycle) {
     showModalBottomSheet(
@@ -37,38 +37,19 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
   void _addExercise(
       String exerciseId, int positionInWorkout, int positionInCycle) {
     /* adding exercise in an existing cycle */
-    if (positionInWorkout - 1 < addedCycles.length) {
+    if (positionInWorkout - 1 < addedCycles.cyclePointers.length) {
       setState(() {
-        final cycle = CyclePointer(
-          exercisePointers: [
-            ...addedCycles[positionInWorkout - 1].exercisePointers,
-            ExercisePointer(
-              id: exerciseId,
-              positionInCycle: positionInCycle,
-            ),
-          ],
-          positionInWorkout: positionInWorkout,
-        );
-        addedCycles.removeAt(positionInWorkout - 1);
-        addedCycles.add(cycle);
-        addedCycles
-            .sort((a, b) => a.positionInWorkout.compareTo(b.positionInWorkout));
+        addedCycles.cyclePointers[positionInWorkout]!
+            .exerciseIds[positionInCycle] = exerciseId;
       });
     }
     /* adding exercise in a new cycle */
     else {
       setState(() {
-        addedCycles.add(
-          CyclePointer(
-            exercisePointers: [
-              ExercisePointer(
-                id: exerciseId,
-                positionInCycle: positionInCycle,
-              )
-            ],
-            positionInWorkout: positionInWorkout,
-          ),
-        );
+        addedCycles.cyclePointers[positionInWorkout] =
+            CyclePointer(exerciseIds: {});
+        addedCycles.cyclePointers[positionInWorkout]!
+            .exerciseIds[positionInCycle] = exerciseId;
       });
     }
   }
@@ -90,13 +71,11 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
       if (userSnapshot.exists) {
         Map<String, dynamic> userData =
             userSnapshot.data() as Map<String, dynamic>;
-
         await FirebaseFirestore.instance.collection('workouts').add({
           'name': _enteredName,
           'creatorsUsername': userData['username'],
           'creationDate': DateTime.now(),
-          'cycles':
-              addedCycles.map((cyclePointer) => cyclePointer.toJson()).toList(),
+          ...addedCycles.toJson()
         });
         print('Workout added to collection successfully');
       } else {
@@ -158,8 +137,8 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
               children: [
                 const Text('Add Cycle'),
                 IconButton(
-                  onPressed: () =>
-                      _openAddExerciseOverlay(addedCycles.length + 1, 1),
+                  onPressed: () => _openAddExerciseOverlay(
+                      addedCycles.cyclePointers.length + 1, 1),
                   icon: const Icon(Icons.add),
                 ),
               ],
@@ -169,23 +148,26 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
             ),
             publicExercises.when(
               data: (publicExercises) {
-                var cycles = addedCycles.map((addedCycle) {
+                List<Widget> cycles = [];
+                addedCycles.cyclePointers
+                    .forEach((positionInWorkout, cyclePointer) {
                   List<Widget> cycle =
                       []; // add exercise cards for every exercise in the cycle
-                  for (var addedExercise in addedCycle.exercisePointers) {
-                    final foundExercise = publicExercises.firstWhere(
-                        (publicExcercise) =>
-                            publicExcercise.id == addedExercise.id);
-                    cycle.add(ExerciseCard(exercise: foundExercise));
-                  }
-                  return ListDisplayHorizontal(
+                  cyclePointer.exerciseIds
+                      .forEach((positionInCycle, exerciseId) {
+                    final foundExercise = publicExercises[exerciseId];
+                    if (foundExercise != null) {
+                      cycle.add(ExerciseCard(exercise: foundExercise));
+                    }
+                  });
+                  cycles.add(ListDisplayHorizontal(
                     containers: [
                       ...cycle,
                       Center(
                         child: IconButton(
                           onPressed: () => _openAddExerciseOverlay(
-                              addedCycle.positionInWorkout,
-                              addedCycle.exercisePointers.length + 1),
+                              positionInWorkout,
+                              cyclePointer.exerciseIds.length + 1),
                           icon: const Icon(Icons.add),
                         ),
                       )
@@ -195,14 +177,14 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
                         Text(
-                          'Set ${addedCycle.positionInWorkout}',
+                          'Set $positionInWorkout',
                           style: const TextStyle(fontSize: 20),
                         ),
                       ],
                     ),
-                  );
-                }).toList();
-                if (addedCycles.isNotEmpty) {
+                  ));
+                });
+                if (addedCycles.cyclePointers.isNotEmpty) {
                   return Column(
                     children: cycles,
                   );

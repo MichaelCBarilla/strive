@@ -14,6 +14,10 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+Exercise _$ExerciseFromJson(Map<String, dynamic> json) {
+  return _Exercise.fromJson(json);
+}
+
 /// @nodoc
 mixin _$Exercise {
   String get id => throw _privateConstructorUsedError;
@@ -26,6 +30,7 @@ mixin _$Exercise {
   int get recommendedRepsMin => throw _privateConstructorUsedError;
   RepType get repType => throw _privateConstructorUsedError;
 
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
   $ExerciseCopyWith<Exercise> get copyWith =>
       throw _privateConstructorUsedError;
@@ -195,7 +200,7 @@ class __$$ExerciseImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$ExerciseImpl implements _Exercise {
   const _$ExerciseImpl(
       {required this.id,
@@ -207,6 +212,9 @@ class _$ExerciseImpl implements _Exercise {
       required this.recommendedRepsMax,
       required this.recommendedRepsMin,
       required this.repType});
+
+  factory _$ExerciseImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ExerciseImplFromJson(json);
 
   @override
   final String id;
@@ -254,6 +262,7 @@ class _$ExerciseImpl implements _Exercise {
             (identical(other.repType, repType) || other.repType == repType));
   }
 
+  @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -272,6 +281,13 @@ class _$ExerciseImpl implements _Exercise {
   @pragma('vm:prefer-inline')
   _$$ExerciseImplCopyWith<_$ExerciseImpl> get copyWith =>
       __$$ExerciseImplCopyWithImpl<_$ExerciseImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ExerciseImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Exercise implements Exercise {
@@ -285,6 +301,9 @@ abstract class _Exercise implements Exercise {
       required final int recommendedRepsMax,
       required final int recommendedRepsMin,
       required final RepType repType}) = _$ExerciseImpl;
+
+  factory _Exercise.fromJson(Map<String, dynamic> json) =
+      _$ExerciseImpl.fromJson;
 
   @override
   String get id;

@@ -59,8 +59,9 @@ class _AddExerciseState extends ConsumerState<AddWorkout> {
                     height: 20), // Spacer between TextField and Exercise List
               ), // Replace SizedBox with SliverSpacing
               publicWorkouts.when(
-                data: (publicWorkouts) {
+                data: (publicWorkoutssMap) {
                   // Use the data in your UI
+                  var publicWorkouts = publicWorkoutssMap.values.toList();
                   return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {

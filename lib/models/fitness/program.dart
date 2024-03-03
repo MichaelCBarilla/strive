@@ -1,17 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:strive/models/fitness/workout.dart';
 
 part 'program.freezed.dart';
 part 'program.g.dart';
 
-@freezed
-class WorkoutPointer with _$WorkoutPointer {
-  const factory WorkoutPointer({
-    required String workoutId,
-    required int positionInProgram,
-  }) = _WorkoutPointer;
+@unfreezed
+class WorkoutPointers with _$WorkoutPointers {
+  factory WorkoutPointers({
+    required Map<int, String> workoutIds,
+  }) = _WorkoutPointers;
 
-  factory WorkoutPointer.fromJson(Map<String, dynamic> json) =>
-      _$WorkoutPointerFromJson(json);
+  factory WorkoutPointers.fromJson(Map<String, dynamic> json) =>
+      _$WorkoutPointersFromJson(json);
 }
 
 @freezed
@@ -19,7 +19,7 @@ class Program with _$Program {
   const factory Program({
     required String id,
     required String name,
-    required List<WorkoutPointer> workoutPointers,
+    required Map<int, Workout> workouts,
     required DateTime creationDate,
     required String creatorUsername,
   }) = _Program;

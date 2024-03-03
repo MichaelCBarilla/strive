@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/firebase_options.dart';
+import 'package:strive/providers/fitness/public_workouts.dart';
 
 import 'package:strive/screens/auth_screen.dart';
 import 'package:strive/screens/loading_screen.dart';
@@ -26,6 +27,7 @@ class MainApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    // ref.watch(publicWorkoutsProvider);
     return MaterialApp(
         theme: ThemeData().copyWith(
           colorScheme: kColorScheme,
