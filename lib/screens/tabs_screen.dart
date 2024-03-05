@@ -8,7 +8,7 @@ import 'package:strive/providers/meta/app_state.dart';
 import 'package:strive/providers/meta/strive_user.dart';
 import 'package:strive/screens/create/create_screen.dart';
 import 'package:strive/screens/explore_screen.dart';
-import 'package:strive/screens/programs_screen.dart';
+import 'package:strive/screens/fitness_screen.dart';
 
 class TabsScreen extends ConsumerStatefulWidget {
   const TabsScreen({super.key});
@@ -66,7 +66,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
     final appState = ref.watch(appStateNotifierProvider);
     Widget activePage;
     if (appState.selectedPageIndex == 0) {
-      activePage = const ProgramsScreen();
+      activePage = const FitnessScreen();
     } else if (appState.selectedPageIndex == 1) {
       activePage = const ExploreScreen();
     } else {
@@ -101,8 +101,8 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         currentIndex: appState.selectedPageIndex,
         items: const [
           BottomNavigationBarItem(
-            icon: Icon(Icons.list),
-            label: 'Personal',
+            icon: Icon(Icons.fitness_center),
+            label: 'Fitness',
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.explore),
