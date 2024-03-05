@@ -21,7 +21,7 @@ class Program with _$Program {
     required String name,
     required Map<int, Workout> workouts,
     required DateTime creationDate,
-    required String creatorUsername,
+    required String creatorsUsername,
   }) = _Program;
 
   factory Program.fromJson(Map<String, dynamic> json) =>

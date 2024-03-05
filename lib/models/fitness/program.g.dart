@@ -30,7 +30,7 @@ _$ProgramImpl _$$ProgramImplFromJson(Map<String, dynamic> json) =>
             MapEntry(int.parse(k), Workout.fromJson(e as Map<String, dynamic>)),
       ),
       creationDate: DateTime.parse(json['creationDate'] as String),
-      creatorUsername: json['creatorUsername'] as String,
+      creatorsUsername: json['creatorsUsername'] as String,
     );
 
 Map<String, dynamic> _$$ProgramImplToJson(_$ProgramImpl instance) =>
@@ -40,5 +40,5 @@ Map<String, dynamic> _$$ProgramImplToJson(_$ProgramImpl instance) =>
       'workouts':
           instance.workouts.map((k, e) => MapEntry(k.toString(), e.toJson())),
       'creationDate': instance.creationDate.toIso8601String(),
-      'creatorUsername': instance.creatorUsername,
+      'creatorsUsername': instance.creatorsUsername,
     };

@@ -152,7 +152,7 @@ mixin _$Program {
   String get name => throw _privateConstructorUsedError;
   Map<int, Workout> get workouts => throw _privateConstructorUsedError;
   DateTime get creationDate => throw _privateConstructorUsedError;
-  String get creatorUsername => throw _privateConstructorUsedError;
+  String get creatorsUsername => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -169,7 +169,7 @@ abstract class $ProgramCopyWith<$Res> {
       String name,
       Map<int, Workout> workouts,
       DateTime creationDate,
-      String creatorUsername});
+      String creatorsUsername});
 }
 
 /// @nodoc
@@ -189,7 +189,7 @@ class _$ProgramCopyWithImpl<$Res, $Val extends Program>
     Object? name = null,
     Object? workouts = null,
     Object? creationDate = null,
-    Object? creatorUsername = null,
+    Object? creatorsUsername = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -208,9 +208,9 @@ class _$ProgramCopyWithImpl<$Res, $Val extends Program>
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      creatorUsername: null == creatorUsername
-          ? _value.creatorUsername
-          : creatorUsername // ignore: cast_nullable_to_non_nullable
+      creatorsUsername: null == creatorsUsername
+          ? _value.creatorsUsername
+          : creatorsUsername // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -228,7 +228,7 @@ abstract class _$$ProgramImplCopyWith<$Res> implements $ProgramCopyWith<$Res> {
       String name,
       Map<int, Workout> workouts,
       DateTime creationDate,
-      String creatorUsername});
+      String creatorsUsername});
 }
 
 /// @nodoc
@@ -246,7 +246,7 @@ class __$$ProgramImplCopyWithImpl<$Res>
     Object? name = null,
     Object? workouts = null,
     Object? creationDate = null,
-    Object? creatorUsername = null,
+    Object? creatorsUsername = null,
   }) {
     return _then(_$ProgramImpl(
       id: null == id
@@ -265,9 +265,9 @@ class __$$ProgramImplCopyWithImpl<$Res>
           ? _value.creationDate
           : creationDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      creatorUsername: null == creatorUsername
-          ? _value.creatorUsername
-          : creatorUsername // ignore: cast_nullable_to_non_nullable
+      creatorsUsername: null == creatorsUsername
+          ? _value.creatorsUsername
+          : creatorsUsername // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -281,7 +281,7 @@ class _$ProgramImpl implements _Program {
       required this.name,
       required final Map<int, Workout> workouts,
       required this.creationDate,
-      required this.creatorUsername})
+      required this.creatorsUsername})
       : _workouts = workouts;
 
   factory _$ProgramImpl.fromJson(Map<String, dynamic> json) =>
@@ -302,11 +302,11 @@ class _$ProgramImpl implements _Program {
   @override
   final DateTime creationDate;
   @override
-  final String creatorUsername;
+  final String creatorsUsername;
 
   @override
   String toString() {
-    return 'Program(id: $id, name: $name, workouts: $workouts, creationDate: $creationDate, creatorUsername: $creatorUsername)';
+    return 'Program(id: $id, name: $name, workouts: $workouts, creationDate: $creationDate, creatorsUsername: $creatorsUsername)';
   }
 
   @override
@@ -319,8 +319,8 @@ class _$ProgramImpl implements _Program {
             const DeepCollectionEquality().equals(other._workouts, _workouts) &&
             (identical(other.creationDate, creationDate) ||
                 other.creationDate == creationDate) &&
-            (identical(other.creatorUsername, creatorUsername) ||
-                other.creatorUsername == creatorUsername));
+            (identical(other.creatorsUsername, creatorsUsername) ||
+                other.creatorsUsername == creatorsUsername));
   }
 
   @JsonKey(ignore: true)
@@ -331,7 +331,7 @@ class _$ProgramImpl implements _Program {
       name,
       const DeepCollectionEquality().hash(_workouts),
       creationDate,
-      creatorUsername);
+      creatorsUsername);
 
   @JsonKey(ignore: true)
   @override
@@ -353,7 +353,7 @@ abstract class _Program implements Program {
       required final String name,
       required final Map<int, Workout> workouts,
       required final DateTime creationDate,
-      required final String creatorUsername}) = _$ProgramImpl;
+      required final String creatorsUsername}) = _$ProgramImpl;
 
   factory _Program.fromJson(Map<String, dynamic> json) = _$ProgramImpl.fromJson;
 
@@ -366,7 +366,7 @@ abstract class _Program implements Program {
   @override
   DateTime get creationDate;
   @override
-  String get creatorUsername;
+  String get creatorsUsername;
   @override
   @JsonKey(ignore: true)
   _$$ProgramImplCopyWith<_$ProgramImpl> get copyWith =>

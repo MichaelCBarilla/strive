@@ -6,12 +6,12 @@ part of 'public_programs.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$publicProgramsHash() => r'738657bd42650a352cb35199fbe5a03a7f3d057a';
+String _$publicProgramsHash() => r'd4640a52417a92e71149150178addcbbbae96332';
 
 /// See also [PublicPrograms].
 @ProviderFor(PublicPrograms)
 final publicProgramsProvider = AutoDisposeStreamNotifierProvider<PublicPrograms,
-    Map<String, Workout>>.internal(
+    Map<String, Program>>.internal(
   PublicPrograms.new,
   name: r'publicProgramsProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -21,6 +21,6 @@ final publicProgramsProvider = AutoDisposeStreamNotifierProvider<PublicPrograms,
   allTransitiveDependencies: null,
 );
 
-typedef _$PublicPrograms = AutoDisposeStreamNotifier<Map<String, Workout>>;
+typedef _$PublicPrograms = AutoDisposeStreamNotifier<Map<String, Program>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
