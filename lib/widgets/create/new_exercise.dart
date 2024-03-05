@@ -1,15 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:strive/providers/meta/strive_user.dart';
 
-class NewExercise extends StatefulWidget {
+class NewExercise extends ConsumerStatefulWidget {
   const NewExercise({super.key});
 
   @override
-  State<NewExercise> createState() => _NewExerciseState();
+  ConsumerState<NewExercise> createState() => _NewExerciseState();
 }
 
-class _NewExerciseState extends State<NewExercise> {
+class _NewExerciseState extends ConsumerState<NewExercise> {
   final _form = GlobalKey<FormState>();
   String _enteredName = '';
   String _enteredRecommendedSetsMin = '';
@@ -63,7 +65,8 @@ class _NewExerciseState extends State<NewExercise> {
       if (userSnapshot.exists) {
         Map<String, dynamic> userData =
             userSnapshot.data() as Map<String, dynamic>;
-        await FirebaseFirestore.instance.collection('exercises').add({
+        final doc =
+            await FirebaseFirestore.instance.collection('exercises').add({
           'name': _enteredName,
           'creatorsUsername': userData['username'],
           'creationDate': DateTime.now(),
@@ -73,6 +76,7 @@ class _NewExerciseState extends State<NewExercise> {
           'recommendedRepsMin': repsMin,
           'repType': _enteredRepType,
         });
+        ref.read(striveUserNotifierProvider.notifier).saveExercise(doc.id);
         print('Object added to collection successfully');
       } else {
         print('Can\'t find user');
