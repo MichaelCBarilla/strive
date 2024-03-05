@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import 'package:strive/models/fitness/program.dart';
-
 import 'package:strive/models/fitness/workout.dart';
 import 'package:strive/providers/fitness/public_workouts.dart';
 

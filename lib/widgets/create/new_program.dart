@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/fitness/program.dart';
 import 'package:strive/providers/fitness/public_workouts.dart';
+import 'package:strive/providers/meta/strive_user.dart';
 import 'package:strive/widgets/create/add_workout.dart';
 import 'package:strive/widgets/display/workout_card.dart';
 import 'package:strive/widgets/display/list_display_horizontal.dart';
@@ -56,12 +57,14 @@ class _NewProgramState extends ConsumerState<NewProgram> {
         Map<String, dynamic> userData =
             userSnapshot.data() as Map<String, dynamic>;
 
-        await FirebaseFirestore.instance.collection('programs').add({
+        final doc =
+            await FirebaseFirestore.instance.collection('programs').add({
           'name': _enteredName,
           'creatorsUsername': userData['username'],
           'creationDate': DateTime.now(),
           ...addedWorkouts.toJson(),
         });
+        ref.read(striveUserNotifierProvider.notifier).saveProgram(doc.id);
         print('Program added to collection successfully');
       } else {
         print('Can\'t find user');

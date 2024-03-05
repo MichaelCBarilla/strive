@@ -213,6 +213,7 @@ mixin _$StriveUser {
   DateTime? get creationDate => throw _privateConstructorUsedError;
   List<String> get savedExercises => throw _privateConstructorUsedError;
   List<String> get savedWorkouts => throw _privateConstructorUsedError;
+  List<String> get savedPrograms => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -235,7 +236,8 @@ abstract class $StriveUserCopyWith<$Res> {
       List<Weight>? weights,
       @TimestampOrNullConverter() DateTime? creationDate,
       List<String> savedExercises,
-      List<String> savedWorkouts});
+      List<String> savedWorkouts,
+      List<String> savedPrograms});
 }
 
 /// @nodoc
@@ -260,6 +262,7 @@ class _$StriveUserCopyWithImpl<$Res, $Val extends StriveUser>
     Object? creationDate = freezed,
     Object? savedExercises = null,
     Object? savedWorkouts = null,
+    Object? savedPrograms = null,
   }) {
     return _then(_value.copyWith(
       id: freezed == id
@@ -298,6 +301,10 @@ class _$StriveUserCopyWithImpl<$Res, $Val extends StriveUser>
           ? _value.savedWorkouts
           : savedWorkouts // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      savedPrograms: null == savedPrograms
+          ? _value.savedPrograms
+          : savedPrograms // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 }
@@ -319,7 +326,8 @@ abstract class _$$StriveUserImplCopyWith<$Res>
       List<Weight>? weights,
       @TimestampOrNullConverter() DateTime? creationDate,
       List<String> savedExercises,
-      List<String> savedWorkouts});
+      List<String> savedWorkouts,
+      List<String> savedPrograms});
 }
 
 /// @nodoc
@@ -342,6 +350,7 @@ class __$$StriveUserImplCopyWithImpl<$Res>
     Object? creationDate = freezed,
     Object? savedExercises = null,
     Object? savedWorkouts = null,
+    Object? savedPrograms = null,
   }) {
     return _then(_$StriveUserImpl(
       id: freezed == id
@@ -380,6 +389,10 @@ class __$$StriveUserImplCopyWithImpl<$Res>
           ? _value._savedWorkouts
           : savedWorkouts // ignore: cast_nullable_to_non_nullable
               as List<String>,
+      savedPrograms: null == savedPrograms
+          ? _value._savedPrograms
+          : savedPrograms // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -396,10 +409,12 @@ class _$StriveUserImpl implements _StriveUser {
       required final List<Weight>? weights,
       @TimestampOrNullConverter() required this.creationDate,
       required final List<String> savedExercises,
-      required final List<String> savedWorkouts})
+      required final List<String> savedWorkouts,
+      required final List<String> savedPrograms})
       : _weights = weights,
         _savedExercises = savedExercises,
-        _savedWorkouts = savedWorkouts;
+        _savedWorkouts = savedWorkouts,
+        _savedPrograms = savedPrograms;
 
   factory _$StriveUserImpl.fromJson(Map<String, dynamic> json) =>
       _$$StriveUserImplFromJson(json);
@@ -444,9 +459,17 @@ class _$StriveUserImpl implements _StriveUser {
     return EqualUnmodifiableListView(_savedWorkouts);
   }
 
+  final List<String> _savedPrograms;
+  @override
+  List<String> get savedPrograms {
+    if (_savedPrograms is EqualUnmodifiableListView) return _savedPrograms;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_savedPrograms);
+  }
+
   @override
   String toString() {
-    return 'StriveUser(id: $id, username: $username, email: $email, imageUrl: $imageUrl, birthdate: $birthdate, weights: $weights, creationDate: $creationDate, savedExercises: $savedExercises, savedWorkouts: $savedWorkouts)';
+    return 'StriveUser(id: $id, username: $username, email: $email, imageUrl: $imageUrl, birthdate: $birthdate, weights: $weights, creationDate: $creationDate, savedExercises: $savedExercises, savedWorkouts: $savedWorkouts, savedPrograms: $savedPrograms)';
   }
 
   @override
@@ -468,7 +491,9 @@ class _$StriveUserImpl implements _StriveUser {
             const DeepCollectionEquality()
                 .equals(other._savedExercises, _savedExercises) &&
             const DeepCollectionEquality()
-                .equals(other._savedWorkouts, _savedWorkouts));
+                .equals(other._savedWorkouts, _savedWorkouts) &&
+            const DeepCollectionEquality()
+                .equals(other._savedPrograms, _savedPrograms));
   }
 
   @JsonKey(ignore: true)
@@ -483,7 +508,8 @@ class _$StriveUserImpl implements _StriveUser {
       const DeepCollectionEquality().hash(_weights),
       creationDate,
       const DeepCollectionEquality().hash(_savedExercises),
-      const DeepCollectionEquality().hash(_savedWorkouts));
+      const DeepCollectionEquality().hash(_savedWorkouts),
+      const DeepCollectionEquality().hash(_savedPrograms));
 
   @JsonKey(ignore: true)
   @override
@@ -509,7 +535,8 @@ abstract class _StriveUser implements StriveUser {
       required final List<Weight>? weights,
       @TimestampOrNullConverter() required final DateTime? creationDate,
       required final List<String> savedExercises,
-      required final List<String> savedWorkouts}) = _$StriveUserImpl;
+      required final List<String> savedWorkouts,
+      required final List<String> savedPrograms}) = _$StriveUserImpl;
 
   factory _StriveUser.fromJson(Map<String, dynamic> json) =
       _$StriveUserImpl.fromJson;
@@ -534,6 +561,8 @@ abstract class _StriveUser implements StriveUser {
   List<String> get savedExercises;
   @override
   List<String> get savedWorkouts;
+  @override
+  List<String> get savedPrograms;
   @override
   @JsonKey(ignore: true)
   _$$StriveUserImplCopyWith<_$StriveUserImpl> get copyWith =>

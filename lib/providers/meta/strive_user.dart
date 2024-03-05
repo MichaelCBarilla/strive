@@ -21,6 +21,7 @@ class StriveUserNotifier extends _$StriveUserNotifier {
       creationDate: null,
       savedExercises: [],
       savedWorkouts: [],
+      savedPrograms: [],
     );
   }
 
@@ -35,6 +36,7 @@ class StriveUserNotifier extends _$StriveUserNotifier {
       creationDate: newStriveUser.creationDate,
       savedExercises: newStriveUser.savedExercises,
       savedWorkouts: newStriveUser.savedWorkouts,
+      savedPrograms: newStriveUser.savedPrograms,
     );
   }
 
@@ -49,6 +51,7 @@ class StriveUserNotifier extends _$StriveUserNotifier {
       creationDate: null,
       savedExercises: [],
       savedWorkouts: [],
+      savedPrograms: [],
     );
   }
 
@@ -150,6 +153,57 @@ class StriveUserNotifier extends _$StriveUserNotifier {
           'workout removed from the user\'s list of savedWorkouts successfully!');
     } catch (e) {
       print('Error removing workout from the list of savedWorkouts: $e');
+      return false;
+    }
+    return true;
+  }
+
+  bool checkIsProgramSaved(String programId) {
+    for (var savedProgramId in state.savedPrograms) {
+      if (programId == savedProgramId) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  Future<bool> saveProgram(String savedProgramId) async {
+    final newSavedPrograms = [...state.savedPrograms, savedProgramId];
+    state = state.copyWith(savedPrograms: newSavedPrograms);
+
+    print(state.id);
+
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(state.id);
+
+    try {
+      await documentReference.update({
+        'savedPrograms': FieldValue.arrayUnion([savedProgramId]),
+      });
+      print('program added to the user\'s list of savedPrograms successfully!');
+    } catch (e) {
+      print('Error adding program to the list of savedPrograms: $e');
+      return false;
+    }
+    return true;
+  }
+
+  Future<bool> removeProgram(String removedProgramId) async {
+    final newSavedPrograms = [...state.savedPrograms];
+    newSavedPrograms.remove(removedProgramId);
+    state = state.copyWith(savedPrograms: newSavedPrograms);
+
+    DocumentReference documentReference =
+        FirebaseFirestore.instance.collection('users').doc(state.id);
+
+    try {
+      await documentReference.update({
+        'savedPrograms': FieldValue.arrayRemove([removedProgramId]),
+      });
+      print(
+          'program removed from the user\'s list of savedPrograms successfully!');
+    } catch (e) {
+      print('Error removing program from the list of savedPrograms: $e');
       return false;
     }
     return true;

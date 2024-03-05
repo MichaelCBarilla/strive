@@ -33,6 +33,7 @@ class PublicWorkouts extends _$PublicWorkouts {
 
         Map<int, Cycle> cycles = {};
         final cyclePointersMap = CyclePointers.fromJson(doc.data());
+
         cyclePointersMap.cyclePointers
             .forEach((positionInWorkout, cyclePointer) {
           Map<int, Exercise> exercises = {};
