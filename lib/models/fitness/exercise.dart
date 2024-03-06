@@ -20,6 +20,7 @@ class Exercise with _$Exercise {
     required int recommendedRepsMax,
     required int recommendedRepsMin,
     required RepType repType,
+    required bool isPublic,
   }) = _Exercise;
 
   factory Exercise.fromJson(Map<String, dynamic> json) =>

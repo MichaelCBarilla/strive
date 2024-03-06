@@ -29,6 +29,7 @@ mixin _$Exercise {
   int get recommendedRepsMax => throw _privateConstructorUsedError;
   int get recommendedRepsMin => throw _privateConstructorUsedError;
   RepType get repType => throw _privateConstructorUsedError;
+  bool get isPublic => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -50,7 +51,8 @@ abstract class $ExerciseCopyWith<$Res> {
       int recommendedSetsMin,
       int recommendedRepsMax,
       int recommendedRepsMin,
-      RepType repType});
+      RepType repType,
+      bool isPublic});
 }
 
 /// @nodoc
@@ -75,6 +77,7 @@ class _$ExerciseCopyWithImpl<$Res, $Val extends Exercise>
     Object? recommendedRepsMax = null,
     Object? recommendedRepsMin = null,
     Object? repType = null,
+    Object? isPublic = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -113,6 +116,10 @@ class _$ExerciseCopyWithImpl<$Res, $Val extends Exercise>
           ? _value.repType
           : repType // ignore: cast_nullable_to_non_nullable
               as RepType,
+      isPublic: null == isPublic
+          ? _value.isPublic
+          : isPublic // ignore: cast_nullable_to_non_nullable
+              as bool,
     ) as $Val);
   }
 }
@@ -134,7 +141,8 @@ abstract class _$$ExerciseImplCopyWith<$Res>
       int recommendedSetsMin,
       int recommendedRepsMax,
       int recommendedRepsMin,
-      RepType repType});
+      RepType repType,
+      bool isPublic});
 }
 
 /// @nodoc
@@ -157,6 +165,7 @@ class __$$ExerciseImplCopyWithImpl<$Res>
     Object? recommendedRepsMax = null,
     Object? recommendedRepsMin = null,
     Object? repType = null,
+    Object? isPublic = null,
   }) {
     return _then(_$ExerciseImpl(
       id: null == id
@@ -195,6 +204,10 @@ class __$$ExerciseImplCopyWithImpl<$Res>
           ? _value.repType
           : repType // ignore: cast_nullable_to_non_nullable
               as RepType,
+      isPublic: null == isPublic
+          ? _value.isPublic
+          : isPublic // ignore: cast_nullable_to_non_nullable
+              as bool,
     ));
   }
 }
@@ -211,7 +224,8 @@ class _$ExerciseImpl implements _Exercise {
       required this.recommendedSetsMin,
       required this.recommendedRepsMax,
       required this.recommendedRepsMin,
-      required this.repType});
+      required this.repType,
+      required this.isPublic});
 
   factory _$ExerciseImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExerciseImplFromJson(json);
@@ -234,10 +248,12 @@ class _$ExerciseImpl implements _Exercise {
   final int recommendedRepsMin;
   @override
   final RepType repType;
+  @override
+  final bool isPublic;
 
   @override
   String toString() {
-    return 'Exercise(id: $id, name: $name, creatorsUsername: $creatorsUsername, creationDate: $creationDate, recommendedSetsMax: $recommendedSetsMax, recommendedSetsMin: $recommendedSetsMin, recommendedRepsMax: $recommendedRepsMax, recommendedRepsMin: $recommendedRepsMin, repType: $repType)';
+    return 'Exercise(id: $id, name: $name, creatorsUsername: $creatorsUsername, creationDate: $creationDate, recommendedSetsMax: $recommendedSetsMax, recommendedSetsMin: $recommendedSetsMin, recommendedRepsMax: $recommendedRepsMax, recommendedRepsMin: $recommendedRepsMin, repType: $repType, isPublic: $isPublic)';
   }
 
   @override
@@ -259,7 +275,9 @@ class _$ExerciseImpl implements _Exercise {
                 other.recommendedRepsMax == recommendedRepsMax) &&
             (identical(other.recommendedRepsMin, recommendedRepsMin) ||
                 other.recommendedRepsMin == recommendedRepsMin) &&
-            (identical(other.repType, repType) || other.repType == repType));
+            (identical(other.repType, repType) || other.repType == repType) &&
+            (identical(other.isPublic, isPublic) ||
+                other.isPublic == isPublic));
   }
 
   @JsonKey(ignore: true)
@@ -274,7 +292,8 @@ class _$ExerciseImpl implements _Exercise {
       recommendedSetsMin,
       recommendedRepsMax,
       recommendedRepsMin,
-      repType);
+      repType,
+      isPublic);
 
   @JsonKey(ignore: true)
   @override
@@ -300,7 +319,8 @@ abstract class _Exercise implements Exercise {
       required final int recommendedSetsMin,
       required final int recommendedRepsMax,
       required final int recommendedRepsMin,
-      required final RepType repType}) = _$ExerciseImpl;
+      required final RepType repType,
+      required final bool isPublic}) = _$ExerciseImpl;
 
   factory _Exercise.fromJson(Map<String, dynamic> json) =
       _$ExerciseImpl.fromJson;
@@ -323,6 +343,8 @@ abstract class _Exercise implements Exercise {
   int get recommendedRepsMin;
   @override
   RepType get repType;
+  @override
+  bool get isPublic;
   @override
   @JsonKey(ignore: true)
   _$$ExerciseImplCopyWith<_$ExerciseImpl> get copyWith =>

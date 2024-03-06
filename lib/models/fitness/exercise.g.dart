@@ -17,6 +17,7 @@ _$ExerciseImpl _$$ExerciseImplFromJson(Map<String, dynamic> json) =>
       recommendedRepsMax: json['recommendedRepsMax'] as int,
       recommendedRepsMin: json['recommendedRepsMin'] as int,
       repType: $enumDecode(_$RepTypeEnumMap, json['repType']),
+      isPublic: json['isPublic'] as bool,
     );
 
 Map<String, dynamic> _$$ExerciseImplToJson(_$ExerciseImpl instance) =>
@@ -30,6 +31,7 @@ Map<String, dynamic> _$$ExerciseImplToJson(_$ExerciseImpl instance) =>
       'recommendedRepsMax': instance.recommendedRepsMax,
       'recommendedRepsMin': instance.recommendedRepsMin,
       'repType': _$RepTypeEnumMap[instance.repType]!,
+      'isPublic': instance.isPublic,
     };
 
 const _$RepTypeEnumMap = {
