@@ -21,6 +21,7 @@ class _NewExerciseState extends ConsumerState<NewExercise> {
   String _repValidateMessage = '';
   String _enteredRecommendedRepsMin = '';
   String _enteredRecommendedRepsMax = '';
+  bool _isPublic = false;
 
   void _submitExercise() async {
     final isValid = _form.currentState!.validate();
@@ -65,18 +66,36 @@ class _NewExerciseState extends ConsumerState<NewExercise> {
       if (userSnapshot.exists) {
         Map<String, dynamic> userData =
             userSnapshot.data() as Map<String, dynamic>;
-        final doc =
-            await FirebaseFirestore.instance.collection('exercises').add({
-          'name': _enteredName,
-          'creatorsUsername': userData['username'],
-          'creationDate': DateTime.now(),
-          'recommendedSetsMax': setsMax,
-          'recommendedSetsMin': setsMin,
-          'recommendedRepsMax': repsMax,
-          'recommendedRepsMin': repsMin,
-          'repType': _enteredRepType,
-        });
-        ref.read(striveUserNotifierProvider.notifier).saveExercise(doc.id);
+        if (_isPublic) {
+          final doc =
+              await FirebaseFirestore.instance.collection('exercises').add({
+            'name': _enteredName,
+            'creatorsUsername': userData['username'],
+            'creationDate': DateTime.now(),
+            'recommendedSetsMax': setsMax,
+            'recommendedSetsMin': setsMin,
+            'recommendedRepsMax': repsMax,
+            'recommendedRepsMin': repsMin,
+            'repType': _enteredRepType,
+          });
+          ref.read(striveUserNotifierProvider.notifier).saveExercise(doc.id);
+        } else {
+          DocumentReference userDocRef = FirebaseFirestore.instance
+              .collection('users')
+              .doc(userSnapshot.id);
+          CollectionReference subcollectionRef =
+              userDocRef.collection('privateExercises');
+          await subcollectionRef.add({
+            'name': _enteredName,
+            'creatorsUsername': userData['username'],
+            'creationDate': DateTime.now(),
+            'recommendedSetsMax': setsMax,
+            'recommendedSetsMin': setsMin,
+            'recommendedRepsMax': repsMax,
+            'recommendedRepsMin': repsMin,
+            'repType': _enteredRepType,
+          });
+        }
         print('Object added to collection successfully');
       } else {
         print('Can\'t find user');
@@ -278,6 +297,23 @@ class _NewExerciseState extends ConsumerState<NewExercise> {
                   ),
                 ],
               ),
+            const SizedBox(
+              height: 20,
+            ),
+            Row(
+              children: [
+                const Text('Public?'),
+                Checkbox(
+                    value: _isPublic,
+                    onChanged: (isPublic) {
+                      setState(() {
+                        if (isPublic != null) {
+                          _isPublic = isPublic;
+                        }
+                      });
+                    }),
+              ],
+            ),
             const SizedBox(
               height: 20,
             ),
