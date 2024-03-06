@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/fitness/workout.dart';
-import 'package:strive/providers/fitness/public_exercises.dart';
+import 'package:strive/providers/fitness/all_exercises.dart';
 import 'package:strive/providers/meta/strive_user.dart';
 import 'package:strive/widgets/create/add_exercise.dart';
 import 'package:strive/widgets/display/exercise_card.dart';
@@ -94,7 +94,7 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
 
   @override
   Widget build(BuildContext context) {
-    final publicExercises = ref.watch(publicExercisesProvider);
+    final allExercises = ref.watch(allExercisesProvider);
     return Form(
       key: _form,
       child: SingleChildScrollView(
@@ -149,7 +149,7 @@ class _NewWorkoutState extends ConsumerState<NewWorkout> {
             const SizedBox(
               height: 20,
             ),
-            publicExercises.when(
+            allExercises.when(
               data: (publicExercises) {
                 List<Widget> cycles = [];
                 addedCycles.cyclePointers

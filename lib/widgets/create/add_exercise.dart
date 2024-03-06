@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:strive/models/fitness/exercise.dart';
+import 'package:strive/providers/fitness/all_exercises.dart';
 
-import 'package:strive/providers/fitness/public_exercises.dart';
 import 'package:strive/widgets/display/exercise_details.dart';
 import 'package:strive/widgets/display/list_display_vertical.dart';
 
@@ -42,7 +41,7 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
 
   @override
   Widget build(BuildContext context) {
-    final publicExercises = ref.watch(publicExercisesProvider);
+    final allExercises = ref.watch(allExercisesProvider);
     final keyboardSpace = MediaQuery.of(context).viewInsets.bottom;
     return LayoutBuilder(builder: (ctx, constraints) {
       final height = constraints.maxHeight - 100;
@@ -65,7 +64,7 @@ class _AddExerciseState extends ConsumerState<AddExercise> {
                 child: SizedBox(
                     height: 20), // Spacer between TextField and Exercise List
               ), // Replace SizedBox with SliverSpacing
-              publicExercises.when(
+              allExercises.when(
                 data: (publicExercisesMap) {
                   // Use the data in your UI
                   var publicExercises = publicExercisesMap.values.toList();

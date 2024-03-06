@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:strive/widgets/display/programs_display.dart';
 
 class FitnessScreen extends StatefulWidget {
   const FitnessScreen({super.key});
@@ -52,6 +53,7 @@ class _FitnessScreenState extends State<FitnessScreen> {
             ),
           ],
         ),
+        ProgramsDisplay(),
       ],
     );
   }

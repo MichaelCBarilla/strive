@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:strive/models/meta/strive_user.dart';
+import 'package:strive/providers/fitness/all_exercises.dart';
 import 'package:strive/providers/meta/app_state.dart';
 import 'package:strive/providers/meta/strive_user.dart';
 import 'package:strive/screens/create/create_screen.dart';
@@ -80,6 +81,7 @@ class _TabsScreenState extends ConsumerState<TabsScreen> {
         actions: [
           IconButton(
               onPressed: () {
+                ref.read(striveUserNotifierProvider.notifier).clearUser();
                 FirebaseAuth.instance.signOut();
               },
               icon: Icon(

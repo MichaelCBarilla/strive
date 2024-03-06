@@ -6,7 +6,7 @@ part of 'public_workouts.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$publicWorkoutsHash() => r'4290722e38b4d8b7ba490d667f057d0e2b7991f6';
+String _$publicWorkoutsHash() => r'b306be3a6065bc63b69efc7344b10f57a58ddd37';
 
 /// See also [PublicWorkouts].
 @ProviderFor(PublicWorkouts)

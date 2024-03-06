@@ -3,7 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:strive/models/fitness/exercise.dart';
 
 import 'package:strive/models/fitness/workout.dart';
-import 'package:strive/providers/fitness/public_exercises.dart';
+import 'package:strive/providers/fitness/all_exercises.dart';
 
 // Necessary for code-generation to work
 part 'public_workouts.g.dart';
@@ -17,7 +17,7 @@ class PublicWorkouts extends _$PublicWorkouts {
         FirebaseFirestore.instance.collection('workouts');
     final snapshots = collectionReference.snapshots();
 
-    final publicExercisesData = ref.watch(publicExercisesProvider);
+    final publicExercisesData = ref.watch(allExercisesProvider);
 
     await for (final snapshot in snapshots) {
       final Map<String, Workout> data = {};
