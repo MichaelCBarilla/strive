@@ -29,6 +29,7 @@ class PublicExercises extends _$PublicExercises {
           recommendedRepsMax: doc.data()['recommendedRepsMax'],
           recommendedRepsMin: doc.data()['recommendedRepsMin'],
           repType: convertStringToEnum(doc.data()['repType']),
+          isPublic: true,
         );
       }).toList();
 
