@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:strive/widgets/display/exercise_display.dart';
 import 'package:strive/widgets/display/programs_display.dart';
+import 'package:strive/widgets/display/workouts_display.dart';
 
 class FitnessScreen extends StatefulWidget {
   const FitnessScreen({super.key});
@@ -53,7 +55,9 @@ class _FitnessScreenState extends State<FitnessScreen> {
             ),
           ],
         ),
-        ProgramsDisplay(),
+        if (_selectedFitnessType == 'Programs') const ProgramsDisplay(),
+        if (_selectedFitnessType == 'Workouts') const WorkoutsDisplay(),
+        if (_selectedFitnessType == 'Exercises') const ExercisesDisplay(),
       ],
     );
   }
