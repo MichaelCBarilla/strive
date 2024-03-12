@@ -1,8 +1,10 @@
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:strive/models/fitness/exercise.dart';
+import 'package:strive/providers/meta/strive_user.dart';
 import 'package:strive/util/string.dart';
 
 part 'all_exercises.g.dart';
@@ -11,12 +13,12 @@ part 'all_exercises.g.dart';
 class AllExercises extends _$AllExercises {
   @override
   Stream<Map<String, Exercise>> build() async* {
-    ref.keepAlive();
+    // ref.keepAlive();
+
+    String? loggedInUserId = ref.watch(striveUserNotifierProvider).id;
 
     final exercisesCollection =
         FirebaseFirestore.instance.collection('exercises');
-    final loggedInUserId = FirebaseAuth
-        .instance.currentUser!.uid; // Replace with the actual user ID
 
     final exercisesSnapshots = exercisesCollection.snapshots();
     final privateExercisesSnapshots = FirebaseFirestore.instance
@@ -62,7 +64,7 @@ class AllExercises extends _$AllExercises {
             recommendedRepsMax: privateExerciseDoc.data()['recommendedRepsMax'],
             recommendedRepsMin: privateExerciseDoc.data()['recommendedRepsMin'],
             repType: convertStringToEnum(privateExerciseDoc.data()['repType']),
-            isPublic: true,
+            isPublic: false,
           );
         }).toList();
 
